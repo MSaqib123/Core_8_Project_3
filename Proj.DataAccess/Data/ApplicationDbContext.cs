@@ -35,8 +35,6 @@ namespace Proj.DataAccess.Data
         //__________________ 1. Data Seeding in Seprate Class ____________________________
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //________ Identity DbContext Required This ________________
-            base.OnModelCreating(modelBuilder);
 
             //________ Category Seeder ________________
             CategorySeeder.Seed(modelBuilder);
@@ -46,6 +44,9 @@ namespace Proj.DataAccess.Data
 
             //________ Company Seeder ________________
             CompanySeeder.Seed(modelBuilder);
+
+            //________ Identity DbContext Required This ________________
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
