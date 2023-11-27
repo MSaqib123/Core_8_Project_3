@@ -1,0 +1,50 @@
+﻿@model Category
+
+<form asp-action="Create" asp-controller="Category" method="post" enctype="multipart/form-data">
+    <div class="row mt-5">
+
+        <h1>Add Category</h1>
+        @*__________ Server Side Validation ______________*@
+        @*
+            All
+        <div asp-validation-summary="All"></div>
+        *@
+
+        @* 
+            Model Only 
+        <div asp-validation-summary="ModelOnly"></div>
+        *@
+
+        @*
+            None
+        *@
+        <div asp-validation-summary="None"></div>
+
+        <div class="col-6 my-4">
+            <label class="form-label" asp-for="Name"></label>
+            <input type="text" class="form-control" placeholder="Disabled input" asp-for="Name">
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="col-6 my-4">
+            <label class="form-label" asp-for="DisplayOrder">Display Order</label>
+            <select class="form-select" asp-for="DisplayOrder">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+            </select>
+            <span asp-validation-for="DisplayOrder" class="text-danger"></span>
+        </div>
+
+        <div class="col-6 my-4">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </div>
+</form>
+
+@*__________ Client Side Validation ______________*@
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

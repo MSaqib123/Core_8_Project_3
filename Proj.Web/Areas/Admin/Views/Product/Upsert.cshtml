@@ -1,0 +1,100 @@
+﻿@model ProductVM
+
+<form asp-action="Upsert" asp-controller="Product" method="post" enctype="multipart/form-data">
+    <div class="row mt-5">
+
+        <h1>@(Model.Product_obj.Id > 0  ? "Update" : "Add" ) Product</h1>
+
+        <input type="hidden" asp-for="Product_obj.Id" />
+
+        <div class="col-9">
+            <div class="row">
+
+                <div class="col-6 my-4">
+                    <label class="form-label" asp-for="Product_obj.Title"></label>
+                    <input type="text" class="form-control" placeholder="" asp-for="Product_obj.Title">
+                    <span asp-validation-for="Product_obj.Title" class="text-danger"></span>
+                </div>
+                <div class="col-6 my-4">
+                    <label class="form-label" asp-for="Product_obj.Author"></label>
+                    <input type="text" class="form-control" placeholder="" asp-for="Product_obj.Author">
+                    <span asp-validation-for="Product_obj.Author" class="text-danger"></span>
+                </div>
+                <div class="col-12 my-4">
+                    <label class="form-label" asp-for="Product_obj.Discription"></label>
+                    <textarea class="form-control" placeholder="" asp-for="Product_obj.Discription" rows="3">
+                    </textarea>
+                    <span asp-validation-for="Product_obj.Discription" class="text-danger"></span>
+                </div>
+                <div class="col-6 my-4">
+                    <label class="form-label" asp-for="Product_obj.ISBN"></label>
+                    <input type="text" class="form-control" placeholder="" asp-for="Product_obj.ISBN">
+                    <span asp-validation-for="Product_obj.ISBN" class="text-danger"></span>
+                </div>
+                <div class="col-6 my-4">
+                    <label class="form-label" asp-for="Product_obj.ListPrice"></label>
+                    <input type="text" class="form-control" placeholder="" asp-for="Product_obj.ListPrice">
+                    <span asp-validation-for="Product_obj.ListPrice" class="text-danger"></span>
+                </div>
+                <div class="col-6 my-4">
+                    <label class="form-label" asp-for="Product_obj.Price"></label>
+                    <input type="text" class="form-control" placeholder="" asp-for="Product_obj.Price">
+                    <span asp-validation-for="Product_obj.Price" class="text-danger"></span>
+                </div>
+                <div class="col-6 my-4">
+                    <label class="form-label" asp-for="Product_obj.Price50"></label>
+                    <input type="text" class="form-control" placeholder="" asp-for="Product_obj.Price50">
+                    <span asp-validation-for="Product_obj.Price50" class="text-danger"></span>
+                </div>
+                <div class="col-6 my-4">
+                    <label class="form-label" asp-for="Product_obj.Price100"></label>
+                    <input type="text" class="form-control" placeholder="" asp-for="Product_obj.Price100">
+                    <span asp-validation-for="Product_obj.Price100" class="text-danger"></span>
+                </div>
+
+
+                @*_____________________ CategoryList ______________________*@
+                <div class="col-6 my-4">
+                    <label class="form-label" asp-for="Product_obj.CategoryId"></label>
+
+                    @*_________ ViewBag _______*@
+                    @*<select asp-for="Product_obj.CategoryId" asp-items="ViewBag.CategoryList">*@
+
+                    @*_________ ViewData _______*@
+                    @*<select asp-for="Product_obj.CategoryId" asp-items="@(ViewData["CategoryList"] as IEnumerable<SelectListItem>)">*@
+
+                    @*_________ ViewMode _______*@
+                    <select asp-for="Product_obj.CategoryId" class="form-controll form-select" asp-items="@(Model.categoryList_obj)">
+                        <option>Select Category</option>
+                    </select>
+                    <span asp-validation-for="Product_obj.CategoryId" class="text-danger"></span>
+                </div>
+                @*_____________________ Product Image ______________________*@
+                <div class="col-6 my-4">
+                    <label class="form-label" asp-for="Product_obj.ImageUrl">Product Image</label>
+                    <input type="hidden" asp-for="Product_obj.ImageUrl">
+                    <input type="file" class="form-control" name="file">
+                </div>
+
+            </div>
+        </div>
+        <div class="col-3">
+            <img class="img-fluid" src="@Model.Product_obj.ImageUrl"/>
+        </div>
+
+
+        <div class="col-6 my-4">
+            <button type="submit" class="btn btn-primary">
+                @(Model.Product_obj.Id > 0 ? "Update" : "Add") Product
+            </button>
+        </div>
+    </div>
+</form>
+
+
+@*__________ Client Side Validation ______________*@
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

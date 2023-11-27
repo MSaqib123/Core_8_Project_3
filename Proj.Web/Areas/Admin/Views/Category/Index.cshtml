@@ -1,0 +1,32 @@
+﻿@model List<Category>
+<div class="container">
+
+    <div class="d-flex justify-content-between align-content-center align-items-center my-4 ">
+        <h1>Categories</h1>
+        <a class="btn btn-primary" asp-action="Create" asp-controller="Category">Create</a>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Id</td>
+                <td>Name</td>
+                <td>DisplayOrder</td>
+                <td>Action</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.CategoryId</td>
+                    <td>@item.Name</td>
+                    <td>@item.DisplayOrder</td>
+                    <td>
+                        <a class="btn btn-primary" asp-controller="Category" asp-action="Edit" asp-route-id="@item.CategoryId">Edit</a>
+                        <a class="btn btn-danger" asp-controller="Category" asp-action="Delete" asp-route-id="@item.CategoryId">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

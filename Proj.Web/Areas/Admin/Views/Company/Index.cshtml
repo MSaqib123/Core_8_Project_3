@@ -1,0 +1,28 @@
+﻿@model List<Company>
+
+<script src="~/js/companydata.js"></script>
+<div class="container">
+
+    <div class="d-flex justify-content-between align-content-center align-items-center my-4 ">
+        <h1>Categories</h1>
+        <a class="btn btn-primary" asp-action="Upsert" asp-controller="Company">Create</a>
+    </div>
+    <table id="tblData" class="table">
+        <thead>
+            <tr>
+                <td>id</td>
+                <td>Name </td>
+                <td>City </td>
+                <td>State</td>
+                <td>PostalCode</td>
+                <td></td>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+
+
+
