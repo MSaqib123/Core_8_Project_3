@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Proj.Models
 {
-    public class ShopingCart
+    public class ShoppingCart
     {
         public int Id { get; set; } 
         public int productId { get; set; }
