@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Proj.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ namespace Proj.DataAccess.Repository.IRepository
         public IProductRepository Product { get; }
         public ICompanyRepository Company { get; }
         public IShoppingCartRepository ShoppingCart { get; }
+        public IApplicationUserRepository ApplicationUser { get; }
         void SaveChange();
     }
 }
