@@ -1,113 +1,104 @@
 ﻿@model Product
-<style>
-    body {
-        background-color: #000
-    }
 
-    .card {
-        border: none
-    }
+<link href="~/css/pdetail.css" rel="stylesheet" />
+<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" rel="stylesheet" />
 
-    .product {
-        background-color: #eee
-    }
+<body oncontextmenu='return false' class='snippet-body'>
 
-    .brand {
-        font-size: 13px
-    }
-
-    .act-price {
-        color: red;
-        font-weight: 700
-    }
-
-    .dis-price {
-        text-decoration: line-through
-    }
-
-    .about {
-        font-size: 14px
-    }
-
-    .color {
-        margin-bottom: 10px
-    }
-
-    label.radio {
-        cursor: pointer
-    }
-
-        label.radio input {
-            position: absolute;
-            top: 0;
-            left: 0;
-            visibility: hidden;
-            pointer-events: none
-        }
-
-        label.radio span {
-            padding: 2px 9px;
-            border: 2px solid #ff0000;
-            display: inline-block;
-            color: #ff0000;
-            border-radius: 3px;
-            text-transform: uppercase
-        }
-
-        label.radio input:checked + span {
-            border-color: #ff0000;
-            background-color: #ff0000;
-            color: #fff
-        }
-
-    .btn-danger {
-        background-color: #ff0000 !important;
-        border-color: #ff0000 !important
-    }
-
-        .btn-danger:hover {
-            background-color: #da0606 !important;
-            border-color: #da0606 !important
-        }
-
-        .btn-danger:focus {
-            box-shadow: none
-        }
-
-    .cart i {
-        margin-right: 10px
-    }
-</style>
-<div class="container mt-5 mb-5 d-flex justify-content-center align-items-center align-content-center h-100">
-    <div class="row d-flex justify-content-center">
-        <div class="col-md-10">
-            <div class="card">
+    <div class="super_container">
+        
+        <div class="single_product">
+            <div class="container-fluid" style=" background-color: #fff; padding: 11px;">
                 <div class="row">
-                    <div class="col-md-6">
-                        <div class="images p-3 d-flex justify-content-center align-items-center align-content-center">
-                            <div class="text-center p-4 d-flex justify-content-center align-items-center align-content-center"> <img  class="img-fluid" src="@Model.ImageUrl"  /> </div>
-                        </div>
+                    
+                    <div class="col-lg-6 order-lg-2 order-1">
+                        <div class="image_selected"><img src="@Model.ImageUrl" alt=""></div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="product p-4">
-                            <div class="mt-4 mb-3">
-                                <span class="text-uppercase text-muted brand">@Model.Category.Name</span>
-                                <h5 class="text-uppercase">@Model.Title</h5>
-                                <div class="price d-flex flex-row align-items-center">
-                                    <span class="act-price">$@Model.Price50</span>
-                                    <div class="ml-2"> <small class="dis-price">$@Model.Price</small> <span>40% OFF</span> </div>
+                    <div class="col-lg-6 order-3">
+                        <div class="product_description">
+                            
+                            <div class="product_name pt-3">@Model.Title</div>
+                            <div> <span class="product_price">$ @Model.Price50</span> <strike class="product_discount"> <span style='color:black'>$ @Model.Price<span> </strike> </div>
+                            <hr class="singleline">
+                            <div>
+                                @Html.Raw(Model.Discription)
+                            </div>
+                            @*
+                            <div>
+                            <div class="row">
+                            <div class="col-md-5">
+                            <div class="br-dashed">
+                            <div class="row">
+                            <div class="col-md-3 col-xs-3"> <img src="https://img.icons8.com/color/48/000000/price-tag.png"> </div>
+                            <div class="col-md-9 col-xs-9">
+                            <div class="pr-info"> <span class="break-all">Get 5% instant discount + 10X rewards </span> </div>
+                            </div>
+                            </div>
+                            </div>
+                            </div>
+                            <div class="col-md-7"> </div>
+                            </div>
+                            <div class="row" style="margin-top: 15px;">
+                            <div class="col-xs-6" style="margin-left: 15px;"> <span class="product_options">RAM Options</span><br> <button class="btn btn-primary btn-sm">4 GB</button> <button class="btn btn-primary btn-sm">8 GB</button> <button class="btn btn-primary btn-sm">16 GB</button> </div>
+                            <div class="col-xs-6" style="margin-left: 55px;"> <span class="product_options">Storage Options</span><br> <button class="btn btn-primary btn-sm">500 GB</button> <button class="btn btn-primary btn-sm">1 TB</button> </div>
+                            </div>
+                            </div>
+                            *@
+                            <hr class="singleline">
+                            <div class="order_info d-flex flex-row">
+                                @*<form action="#">*@
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6" style="margin-left: 13px;">
+                                    <div class="product_quantity">
+                                        <span>QTY: </span> <input id="quantity_input" type="text" pattern="[0-9]*" value="1">
+                                        <div class="quantity_buttons">
+                                            <div id="quantity_inc_button" class="quantity_inc quantity_control"><i class="fas fa-chevron-up"></i></div>
+                                            <div id="quantity_dec_button" class="quantity_dec quantity_control"><i class="fas fa-chevron-down"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <button type="button" class="btn btn-primary shop-button">Add to Cart</button> 
+                                    <button type="button" class="btn btn-success shop-button">Buy Now</button>
+                                    @*<div class="product_fav"><i class="fas fa-heart"></i></div>*@
                                 </div>
                             </div>
-                            <p class="about">@Html.Raw(Model.Discription)</p>
-                            <div class="sizes mt-5">
-                                <h6 class="text-uppercase">Size</h6> <label class="radio"> <input type="radio" name="size" value="S" checked> <span>S</span> </label> <label class="radio"> <input type="radio" name="size" value="M"> <span>M</span> </label> <label class="radio"> <input type="radio" name="size" value="L"> <span>L</span> </label> <label class="radio"> <input type="radio" name="size" value="XL"> <span>XL</span> </label> <label class="radio"> <input type="radio" name="size" value="XXL"> <span>XXL</span> </label>
-                            </div>
-                            <div class="cart mt-4 align-items-center"> <button class="btn btn-danger text-uppercase mr-2 px-4">Add to cart</button> </div>
                         </div>
                     </div>
                 </div>
+                
+                
             </div>
         </div>
     </div>
-</div>
+    <script type='text/javascript'></script>
+</body>
+
+
+<script>
+    $(document).ready(function () {
+        // Get the input element and buttons
+        var quantityInput = $('#quantity_input');
+        var incButton = $('#quantity_inc_button');
+        var decButton = $('#quantity_dec_button');
+
+        // Increment button click event
+        incButton.on('click', function () {
+            // Get the current value and increment it
+            var currentValue = parseInt(quantityInput.val());
+            quantityInput.val(currentValue + 1);
+        });
+
+        // Decrement button click event
+        decButton.on('click', function () {
+            // Get the current value and decrement it, but ensure it doesn't go below 1
+            var currentValue = parseInt(quantityInput.val());
+            if (currentValue > 1) {
+                quantityInput.val(currentValue - 1);
+            }
+        });
+    });
+</script>
 
