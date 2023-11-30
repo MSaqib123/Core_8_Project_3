@@ -5,9 +5,10 @@
 <link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" rel="stylesheet" />
 
 <body oncontextmenu='return false' class='snippet-body'>
+    <form method="post">
 
     <div class="super_container">
-        
+            <input type="hidden" asp-for ="@Model.Product.Id" />
         <div class="single_product">
             <div class="container-fluid" style=" background-color: #fff; padding: 11px;">
                 <div class="row">
@@ -60,8 +61,8 @@
                                     </div>
                                 </div>
                                 <div class="col-xs-6">
-                                    <button type="button" class="btn btn-primary shop-button">Add to Cart</button> 
-                                    <button type="button" class="btn btn-success shop-button">Buy Now</button>
+                                    <button type="submit" class="btn btn-primary shop-button">Add to Cart</button>
+                                        <button type="submit" class="btn btn-success shop-button">Buy Now</button>
                                     @*<div class="product_fav"><i class="fas fa-heart"></i></div>*@
                                 </div>
                             </div>
@@ -73,7 +74,10 @@
             </div>
         </div>
     </div>
+
+    </form>
     <script type='text/javascript'></script>
+
 </body>
 
 

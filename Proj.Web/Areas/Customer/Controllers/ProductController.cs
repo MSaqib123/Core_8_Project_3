@@ -23,5 +23,10 @@ namespace Proj.Web.Areas.Customer.Controllers
             s.Product = _iUnit.Product.Get(x => x.Id == id, includeProperties: "Category");
             return View(s);
         }
+        [HttpPost]
+        public IActionResult Detail(ShoppingCart obj)
+        {
+            return View();
+        }
     }
 }
