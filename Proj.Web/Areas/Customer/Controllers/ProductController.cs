@@ -21,6 +21,7 @@ namespace Proj.Web.Areas.Customer.Controllers
         {
             ShoppingCart s = new ShoppingCart();
             s.Product = _iUnit.Product.Get(x => x.Id == id, includeProperties: "Category");
+            s.productId = id;
             return View(s);
         }
         [HttpPost]
