@@ -1,4 +1,4 @@
-﻿@model Product
+﻿@model ShoppingCart
 
 <link href="~/css/pdetail.css" rel="stylesheet" />
 <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
@@ -13,16 +13,16 @@
                 <div class="row">
                     
                     <div class="col-lg-6 order-lg-2 order-1">
-                        <div class="image_selected"><img src="@Model.ImageUrl" alt=""></div>
+                        <div class="image_selected"><img src="@Model.Product.ImageUrl" alt=""></div>
                     </div>
                     <div class="col-lg-6 order-3">
                         <div class="product_description">
                             
-                            <div class="product_name pt-3">@Model.Title</div>
-                            <div> <span class="product_price">$ @Model.Price50</span> <strike class="product_discount"> <span style='color:black'>$ @Model.Price<span> </strike> </div>
+                            <div class="product_name pt-3">@Model.Product.Title</div>
+                            <div> <span class="product_price">$ @Model.Product.Price50</span> <strike class="product_discount"> <span style='color:black'>$ @Model.Product.Price<span> </strike> </div>
                             <hr class="singleline">
                             <div>
-                                @Html.Raw(Model.Discription)
+                                @Html.Raw(Model.Product.Discription)
                             </div>
                             @*
                             <div>
