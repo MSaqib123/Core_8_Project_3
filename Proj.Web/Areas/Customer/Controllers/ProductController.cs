@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Proj.DataAccess.Repository.IRepository;
+using Proj.Models;
 
 namespace Proj.Web.Areas.Customer.Controllers
 {
@@ -18,8 +19,9 @@ namespace Proj.Web.Areas.Customer.Controllers
 
         public IActionResult Detail(int id)
         {
-            var product = _iUnit.Product.Get(x=>x.Id == id,includeProperties : "Category");
-            return View(product);
+            ShoppingCart s = new ShoppingCart();
+            s.Product = _iUnit.Product.Get(x => x.Id == id, includeProperties: "Category");
+            return View(s);
         }
     }
 }

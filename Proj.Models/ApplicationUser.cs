@@ -20,6 +20,7 @@ namespace Proj.Models
         public string? State { get; set; }
         public string? PostalCode { get; set; }
 
+        [ValidateNever]
         public int? CompanyId { get; set; }
         [ForeignKey("CompanyId")]
         [ValidateNever]

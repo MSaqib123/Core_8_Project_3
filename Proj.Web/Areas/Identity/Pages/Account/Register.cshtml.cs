@@ -127,6 +127,7 @@ namespace Proj.Web.Areas.Identity.Pages.Account
             ///     This is List of Role to Show in View
             /// </summary>
             /// 
+            [ValidateNever]
             public int? CompanyId { get; set; }
             [ValidateNever]
             public IEnumerable<SelectListItem> CompanyList { get; set; }
