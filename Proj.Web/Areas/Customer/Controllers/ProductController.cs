@@ -36,6 +36,9 @@ namespace Proj.Web.Areas.Customer.Controllers
             _iUnit.ShoppingCart.Add(obj);
             _iUnit.SaveChange();
             return RedirectToAction(nameof(Index));
+
+
+
         }
     }
 }
