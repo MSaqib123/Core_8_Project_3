@@ -33,7 +33,18 @@ namespace Proj.Web.Areas.Customer.Controllers
             var claimIdentity = (ClaimsIdentity)User.Identity;
             var userId = claimIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
             obj.ApplicationUserId = userId.ToString();
-            _iUnit.ShoppingCart.Add(obj);
+
+            //____ checking Cart productCart exist in DB _____
+            var cartFromDb = _iUnit.ShoppingCart.Get(x=>x.ApplicationUserId == userId && x.productId == obj.productId);
+            if (cartFromDb != null)
+            {
+                cartFromDb.Count += obj.Count;
+                _iUnit.ShoppingCart.Update(cartFromDb);
+            }
+            else
+            {
+                _iUnit.ShoppingCart.Add(obj);
+            }
             _iUnit.SaveChange();
             return RedirectToAction(nameof(Detail));
 
