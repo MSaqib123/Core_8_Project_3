@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,7 @@ namespace Proj.Models
 {
     public class ShoppingCart
     {
+        [Key]
         public int Id { get; set; } 
         public int productId { get; set; }
         [ForeignKey("productId")]

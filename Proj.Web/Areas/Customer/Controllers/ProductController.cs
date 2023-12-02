@@ -35,7 +35,7 @@ namespace Proj.Web.Areas.Customer.Controllers
             obj.ApplicationUserId = userId.ToString();
             _iUnit.ShoppingCart.Add(obj);
             _iUnit.SaveChange();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Detail));
 
 
 
