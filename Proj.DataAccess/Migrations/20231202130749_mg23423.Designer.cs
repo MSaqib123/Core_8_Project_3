@@ -12,8 +12,8 @@ using Proj.DataAccess.Data;
 namespace Proj.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231202120452_updateing_migreation")]
-    partial class updateing_migreation
+    [Migration("20231202130749_mg23423")]
+    partial class mg23423
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -518,9 +518,8 @@ namespace Proj.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Count")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
 
                     b.Property<int>("productId")
                         .HasColumnType("int");
