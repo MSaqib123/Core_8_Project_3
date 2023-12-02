@@ -20,8 +20,10 @@
                     <div class="col-lg-6 order-3">
                         <div class="product_description">
                             
-                            <div class="product_name pt-3">@Model.Product.Title</div>
-                            <div> <span class="product_price">$ @Model.Product.Price50</span> <strike class="product_discount"> <span style='color:black'>$ @Model.Product.Price<span> </strike> </div>
+                            <h2 class="pt-3">@Model.Product.Title</h2>
+                                <div class="d-flex justify-content-evenly"> QTY 1-50: <span class=""> $ @Model.Product.Price</span> </div>
+                                <div class="d-flex justify-content-evenly"> QTY 51-100: <span class="">$ @Model.Product.Price50</span> </div>
+                                <div class="d-flex justify-content-evenly"> QTY 100+: <span class="">$ @Model.Product.Price100</span> </div>
                             <hr class="singleline">
                             <div>
                                 @Html.Raw(Model.Product.Discription)
