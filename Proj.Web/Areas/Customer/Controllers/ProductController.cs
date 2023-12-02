@@ -39,7 +39,8 @@ namespace Proj.Web.Areas.Customer.Controllers
             if (cartFromDb != null)
             {
                 cartFromDb.Count += obj.Count;
-                _iUnit.ShoppingCart.Update(cartFromDb);
+                //______________ Bug of Entity _________________
+                //_iUnit.ShoppingCart.Update(cartFromDb);
             }
             else
             {
