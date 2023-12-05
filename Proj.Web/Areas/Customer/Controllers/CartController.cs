@@ -11,13 +11,14 @@ namespace Proj.Web.Areas.Customer.Controllers
     public class CartController : Controller
     {
         private readonly IUnitOfWork iUnit;
+        ShoppingCartVM vm = new ShoppingCartVM();
+
         public CartController(IUnitOfWork _iUnit)
         {
             iUnit = _iUnit;
         }
         public IActionResult Index()
         {
-            ShoppingCartVM vm = new ShoppingCartVM();
             vm.ShoppingCartList = iUnit.ShoppingCart.GetAll();
             return View();
         }
