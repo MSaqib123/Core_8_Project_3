@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Proj.DataAccess.Repository.IRepository;
 using Proj.Models.ViewModel;
+using System.Security.Claims;
 
 namespace Proj.Web.Areas.Customer.Controllers
 {
@@ -19,7 +20,10 @@ namespace Proj.Web.Areas.Customer.Controllers
         }
         public IActionResult Index()
         {
-            vm.ShoppingCartList = iUnit.ShoppingCart.GetAll();
+            var claimIdentity = (ClaimsIdentity)User.Identity;
+            var userId = claimIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            vm.ShoppingCartList = iUnit.ShoppingCart.GetAll(x=>x.ApplicationUserId == userId , includeProperties : "Product");
             return View();
         }
     }
