@@ -30,7 +30,7 @@
                                     <!-- Image -->
                                     <div class="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
                                         <img src="@item.Product.ImageUrl"
-                                             class="w-100" alt="Blue Jeans Jacket" />
+                                             class="w-100" alt="@item.Product.Title" />
                                         <a href="#!">
                                             <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
                                         </a>
@@ -40,9 +40,9 @@
 
                                 <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
                                     <!-- Data -->
-                                    <p><strong>Blue denim shirt</strong></p>
-                                    <p>Color: blue</p>
-                                    <p>Size: M</p>
+                                    <p><strong>@item.Product.Title</strong></p>
+                                    <p>Color: seprateTable</p>
+                                    <p>Size: no-size</p>
                                     <button type="button" class="btn btn-primary btn-sm me-1 mb-2" data-mdb-toggle="tooltip"
                                             title="Remove item">
                                         <i class="fas fa-trash"></i>
@@ -63,7 +63,7 @@
                                         </button>
 
                                         <div class="form-outline">
-                                            <input id="form1" min="0" name="quantity" value="1" type="number" class="form-control" />
+                                            <input id="form1" min="0" name="quantity" value="@item.Count" type="number" class="form-control" />
                                             <label class="form-label" for="form1">Quantity</label>
                                         </div>
 
