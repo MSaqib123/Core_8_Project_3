@@ -46,10 +46,10 @@
                                     <p><strong>@item.Product.Title</strong></p>
                                     <p>Color: seprateTable</p>
                                     <p>Size: no-size</p>
-                                    <button type="button" class="btn btn-primary btn-sm me-1 mb-2" data-mdb-toggle="tooltip"
+                                    <a asp-action="remove" asp-route-cartId="@item.Id" type="button" class="btn btn-primary btn-sm me-1 mb-2" data-mdb-toggle="tooltip"
                                             title="Remove item">
                                         <i class="fas fa-trash"></i>
-                                    </button>
+                                    </a>
                                     <button type="button" class="btn btn-danger btn-sm mb-2" data-mdb-toggle="tooltip"
                                             title="Move to the wish list">
                                         <i class="fas fa-heart"></i>
@@ -60,20 +60,20 @@
                                 <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
                                     <!-- Quantity -->
                                     <div class="d-flex mb-4" style="max-width: 300px">
-                                        <button class="btn btn-sm btn-primary me-2"
+                                        <a asp-action="minus" asp-route-cartId="@item.Id" class="btn btn-sm btn-primary me-2"
                                                 onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
                                             <i class="fas fa-minus"></i>
-                                        </button>
+                                        </a>
 
                                         <div class="form-outline">
                                             <input id="form1" min="0" name="quantity" value="@item.Count" type="number" class="form-control" />
                                             <label class="form-label" for="form1">Quantity</label>
                                         </div>
 
-                                        <button class="btn btn-sm btn-primary ms-2"
+                                        <a asp-action="plus" asp-route-cartId="@item.Id" class="btn btn-sm btn-primary ms-2"
                                                 onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
                                             <i class="fas fa-plus"></i>
-                                        </button>
+                                        </a>
                                     </div>
                                     <!-- Quantity -->
                                     <!-- Price -->
