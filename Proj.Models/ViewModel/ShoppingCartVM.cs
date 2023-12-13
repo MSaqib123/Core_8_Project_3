@@ -9,7 +9,10 @@ namespace Proj.Models.ViewModel
     public class ShoppingCartVM
     {
         public IEnumerable<ShoppingCart> ShoppingCartList { get; set; }
-        public double OrderTotal { get; set; }
+
+        //public double OrderTotal { get; set; }  Moving to Detail Table this properity
+
+        public OrderHeader OrderHeader { get; set; }
 
     }
 }

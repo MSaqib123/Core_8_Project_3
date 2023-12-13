@@ -32,7 +32,7 @@ namespace Proj.Web.Areas.Customer.Controllers
             {
                 double price = GetPriceBaseOnQuantity(cart);
                 cart.Price = price;
-                vm.OrderTotal += (price * cart.Count);
+                vm.OrderHeader.OrderTotal += (price * cart.Count);
             }
             return View(vm);
         }
@@ -87,7 +87,7 @@ namespace Proj.Web.Areas.Customer.Controllers
             {
                 double price = GetPriceBaseOnQuantity(cart);
                 cart.Price = price;
-                vm.OrderTotal += (price * cart.Count);
+                vm.OrderHeader.OrderTotal += (price * cart.Count);
             }
             return View(vm);
         }
