@@ -36,41 +36,6 @@ namespace Proj.Web.Areas.Customer.Controllers
             }
             return View(vm);
         }
-
-
-        public IActionResult minus(int cartId)
-        {
-            var cartFromDb = iUnit.ShoppingCart.Get(u => u.Id == cartId);
-            if (cartFromDb.Count <= 1)
-            {
-                iUnit.ShoppingCart.Remove(cartFromDb);
-            }
-            else
-            {
-                cartFromDb.Count -= 1;
-                iUnit.ShoppingCart.Update(cartFromDb);
-            }
-            
-            iUnit.SaveChange();
-            return RedirectToAction("Index");
-        }
-        public IActionResult plus(int cartId)
-        {
-            var cartFromDb = iUnit.ShoppingCart.Get(u=>u.Id == cartId);
-            cartFromDb.Count += 1;
-            iUnit.ShoppingCart.Update(cartFromDb);
-            iUnit.SaveChange();
-            return RedirectToAction("Index");
-        }
-
-        public IActionResult remove(int cartId)
-        {
-            var cartFromDb = iUnit.ShoppingCart.Get(u => u.Id == cartId);
-            iUnit.ShoppingCart.Remove(cartFromDb);
-            iUnit.SaveChange();
-            return RedirectToAction("Index");
-        }
-
         private double GetPriceBaseOnQuantity(ShoppingCart obj)
         {
             if(obj.Count <= 50)
@@ -90,5 +55,41 @@ namespace Proj.Web.Areas.Customer.Controllers
             }
 
         }
+
+        //_____ minus Cart ______
+        public IActionResult minus(int cartId)
+        {
+            var cartFromDb = iUnit.ShoppingCart.Get(u => u.Id == cartId);
+            if (cartFromDb.Count <= 1)
+            {
+                iUnit.ShoppingCart.Remove(cartFromDb);
+            }
+            else
+            {
+                cartFromDb.Count -= 1;
+                iUnit.ShoppingCart.Update(cartFromDb);
+            }
+            
+            iUnit.SaveChange();
+            return RedirectToAction("Index");
+        }
+        //_____ plus Cart ______
+        public IActionResult plus(int cartId)
+        {
+            var cartFromDb = iUnit.ShoppingCart.Get(u=>u.Id == cartId);
+            cartFromDb.Count += 1;
+            iUnit.ShoppingCart.Update(cartFromDb);
+            iUnit.SaveChange();
+            return RedirectToAction("Index");
+        }
+        //_____ remove Cart ______
+        public IActionResult remove(int cartId)
+        {
+            var cartFromDb = iUnit.ShoppingCart.Get(u => u.Id == cartId);
+            iUnit.ShoppingCart.Remove(cartFromDb);
+            iUnit.SaveChange();
+            return RedirectToAction("Index");
+        }
+
     }
 }
