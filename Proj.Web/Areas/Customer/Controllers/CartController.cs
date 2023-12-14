@@ -36,6 +36,7 @@ namespace Proj.Web.Areas.Customer.Controllers
             }
             return View(vm);
         }
+        
         private double GetPriceBaseOnQuantity(ShoppingCart obj)
         {
             if(obj.Count <= 50)
@@ -89,6 +90,24 @@ namespace Proj.Web.Areas.Customer.Controllers
             iUnit.ShoppingCart.Remove(cartFromDb);
             iUnit.SaveChange();
             return RedirectToAction("Index");
+        }
+
+        public IActionResult CheckOut()
+        {
+            ShoppingCartVM vm = new ShoppingCartVM();
+            var claimIdentity = (ClaimsIdentity)User.Identity;
+            var userId = claimIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            vm.ShoppingCartList = iUnit.ShoppingCart.GetAll(x => x.ApplicationUserId == userId, includeProperties: "Product");
+
+            //___ Total price base on Quantity ___
+            foreach (var cart in vm.ShoppingCartList)
+            {
+                double price = GetPriceBaseOnQuantity(cart);
+                cart.Price = price;
+                vm.OrderTotal += (price * cart.Count);
+            }
+            return View(vm);
         }
 
     }
