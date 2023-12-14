@@ -37,26 +37,7 @@ namespace Proj.Web.Areas.Customer.Controllers
             return View(vm);
         }
         
-        private double GetPriceBaseOnQuantity(ShoppingCart obj)
-        {
-            if(obj.Count <= 50)
-            {
-                return obj.Product.Price;
-            }
-            else
-            {
-                if (obj.Count <= 100)
-                {
-                    return obj.Product.Price50;
-                }
-                else
-                {
-                    return obj.Product.Price100;
-                }
-            }
-
-        }
-
+        
         //_____ minus Cart ______
         public IActionResult minus(int cartId)
         {
@@ -92,6 +73,7 @@ namespace Proj.Web.Areas.Customer.Controllers
             return RedirectToAction("Index");
         }
 
+        //_____ CheckOut Screen ______
         public IActionResult CheckOut()
         {
             ShoppingCartVM vm = new ShoppingCartVM();
@@ -109,6 +91,27 @@ namespace Proj.Web.Areas.Customer.Controllers
             }
             return View(vm);
         }
+
+        private double GetPriceBaseOnQuantity(ShoppingCart obj)
+        {
+            if (obj.Count <= 50)
+            {
+                return obj.Product.Price;
+            }
+            else
+            {
+                if (obj.Count <= 100)
+                {
+                    return obj.Product.Price50;
+                }
+                else
+                {
+                    return obj.Product.Price100;
+                }
+            }
+
+        }
+
 
     }
 }
