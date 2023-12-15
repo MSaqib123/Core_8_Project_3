@@ -27,6 +27,8 @@ namespace Proj.Web.Areas.Customer.Controllers
 
             vm.ShoppingCartList = iUnit.ShoppingCart.GetAll(x => x.ApplicationUserId == userId, includeProperties: "Product");
 
+            vm.OrderHeader = new();
+
             //___ Total price base on Quantity ___
             foreach (var cart in vm.ShoppingCartList)
             {
@@ -80,7 +82,17 @@ namespace Proj.Web.Areas.Customer.Controllers
             var claimIdentity = (ClaimsIdentity)User.Identity;
             var userId = claimIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
 
+            vm.OrderHeader = new();
             vm.ShoppingCartList = iUnit.ShoppingCart.GetAll(x => x.ApplicationUserId == userId, includeProperties: "Product");
+
+            //___ Getting login user Data ____
+            vm.OrderHeader.ApplicationUser = iUnit.ApplicationUser.Get(u => u.Id == userId);
+            vm.OrderHeader.Name = vm.OrderHeader.ApplicationUser.Name;
+            vm.OrderHeader.PhoneNumber = vm.OrderHeader.ApplicationUser.PhoneNumber;
+            vm.OrderHeader.StreetAddress = vm.OrderHeader.ApplicationUser.StreetAddress;
+            vm.OrderHeader.City = vm.OrderHeader.ApplicationUser.City;
+            vm.OrderHeader.State = vm.OrderHeader.ApplicationUser.State;
+            vm.OrderHeader.PostCode = vm.OrderHeader.ApplicationUser.PostalCode;
 
             //___ Total price base on Quantity ___
             foreach (var cart in vm.ShoppingCartList)
