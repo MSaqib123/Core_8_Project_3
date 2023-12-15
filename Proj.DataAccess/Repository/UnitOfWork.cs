@@ -1,5 +1,6 @@
 ﻿using Proj.DataAccess.Data;
 using Proj.DataAccess.Repository.IRepository;
+using Proj.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace Proj.DataAccess.Repository
         public ICompanyRepository Company { get; private set; }
         public IShoppingCartRepository ShoppingCart { get; private set; }
         public IApplicationUserRepository ApplicationUser { get; private set; }
+        public IOrderHeaderRepository OrderHeader{ get; private set; }
         public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;
@@ -24,6 +26,7 @@ namespace Proj.DataAccess.Repository
             Company = new CompanyRepository(_db);
             ShoppingCart = new ShoppingCartRepository(_db);
             ApplicationUser = new ApplicationUserRepository(_db);
+            OrderHeader = new OrderHeaderRepository(_db);
         }
         public void SaveChange()
         {
