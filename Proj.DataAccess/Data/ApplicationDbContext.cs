@@ -17,6 +17,8 @@ namespace Proj.DataAccess.Data
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<Company> Companies { get; set; }
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }
+        public DbSet<OrderHeader> orderHeaders{ get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
 
 
         //__________________ 1. Data Seeding ____________________________

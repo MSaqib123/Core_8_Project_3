@@ -34,7 +34,7 @@ namespace Proj.Models
         //____ For Company user ______
         //they can pay after  30 day  if clients are company
         public DateTime PaymentDate { get; set; }
-        public DateOnly PaymentDueDate { get; set; }
+        public DateTime PaymentDueDate { get; set; }
 
         //____ Payment (creditCart , stripe) ______
         public string? PaymentIntentId { get; set; }
