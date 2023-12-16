@@ -83,7 +83,9 @@ namespace Proj.Web.Areas.Customer.Controllers
             var claimIdentity = (ClaimsIdentity)User.Identity;
             var userId = claimIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
 
+            shoppingCartVM = new ShoppingCartVM();
             shoppingCartVM.OrderHeader = new();
+
             shoppingCartVM.ShoppingCartList = iUnit.ShoppingCart.GetAll(x => x.ApplicationUserId == userId, includeProperties: "Product");
 
             //___ Getting login user Data ____
