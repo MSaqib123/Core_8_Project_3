@@ -113,9 +113,18 @@ namespace Proj.Web.Areas.Customer.Controllers
             var userId = claimIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
 
             shoppingCartVM.ShoppingCartList = iUnit.ShoppingCart.GetAll(x => x.ApplicationUserId == userId, includeProperties: "Product");
+            
+            //_____ Error Due to navigation Property
+            //shoppingCartVM.OrderHeader.ApplicationUser = iUnit.ApplicationUser.Get(u => u.Id == userId);
+            ApplicationUser applicationUser = iUnit.ApplicationUser.Get(u => u.Id == userId);
 
             /*___________________ Shopping Header _______________________*/
             #region Header
+            //___ Order Date ___
+            shoppingCartVM.OrderHeader.OrderDate = DateTime.Now;
+            shoppingCartVM.OrderHeader.ApplicationUserID = userId;
+
+
             //___ Getting login user Data ____
             shoppingCartVM.OrderHeader.ApplicationUser = iUnit.ApplicationUser.Get(u => u.Id == userId);
 
@@ -127,7 +136,7 @@ namespace Proj.Web.Areas.Customer.Controllers
                 shoppingCartVM.OrderHeader.OrderTotal += (price * cart.Count);
             }
             //___ Company ____
-            if(shoppingCartVM.OrderHeader.ApplicationUser.CompanyId.GetValueOrDefault() == 0)
+            if(applicationUser.CompanyId.GetValueOrDefault() == 0)
             {
                 //its Customer
                 shoppingCartVM.OrderHeader.PaymentStatus = SD.PaymentStatusPending;
@@ -160,7 +169,7 @@ namespace Proj.Web.Areas.Customer.Controllers
             #endregion
 
             //_____ Adding Stripe Proccessing ____________
-            if(shoppingCartVM.OrderHeader.ApplicationUser.CompanyId.GetValueOrDefault() == 0)
+            if(applicationUser.CompanyId.GetValueOrDefault() == 0)
             {
                 //its regular Customer account and need to Capture payment
                 //stripe logic
