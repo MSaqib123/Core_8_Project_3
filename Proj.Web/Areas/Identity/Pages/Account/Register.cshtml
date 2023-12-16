@@ -51,6 +51,7 @@
                     </div>
 
                     <div class="form mb-3">
+
                         <select asp-for="Input.CompanyId" style="display:none" asp-items="@Model.Input.CompanyList" class="form-select">
                             <option>---- Select Company ----</option>
                         </select>
@@ -83,10 +84,10 @@
             $("#Input_Role").change(function () {
                 var selection = $("#Input_Role Option:Selected").text();
                 if(selection == "Company"){
-                    
                     $("#Input_CompanyId").show();
                 }
                 else{
+                    $("#Input_CompanyId").val = 0;
                     $("#Input_CompanyId").hide();
                 }
             })
