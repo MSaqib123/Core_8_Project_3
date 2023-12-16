@@ -37,6 +37,7 @@ namespace Proj.Models
         public DateTime PaymentDueDate { get; set; }
 
         //____ Payment (creditCart , stripe) ______
+        public string? SessionId { get; set; }
         public string? PaymentIntentId { get; set; }
 
 
