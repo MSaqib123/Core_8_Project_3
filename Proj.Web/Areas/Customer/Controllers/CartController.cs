@@ -220,6 +220,24 @@ namespace Proj.Web.Areas.Customer.Controllers
         }
         public IActionResult OrderConfirmation(int id)
         {
+            OrderHeader orderHeader = iUnit.OrderHeader.Get(u => u.Id == id, includeProperties: "ApplicationUser");
+            if (orderHeader.PaymentStatus != SD.PaymentStatusDelayedPayment)
+            {
+                //this is Customer Order
+                var service = new SessionService();
+                Session session = service.Get(orderHeader.SessionId);
+                if(session.PaymentStatus.ToLower() == "paid")
+                {
+                    iUnit.OrderHeader.UpdateStripePaymentId(id, session.Id, session.PaymentIntentId);
+                    iUnit.OrderHeader.UpdateStatus(id, SD.StatusApproved,SD.PaymentStatusApproved);
+                    iUnit.SaveChange();
+                }
+            }
+            //___________ Removing All Showiping Cart List for DB _________
+            List<ShoppingCart> shopingCart = iUnit.ShoppingCart.GetAll(x => x.ApplicationUserId == orderHeader.ApplicationUserID).ToList();
+            iUnit.ShoppingCart.RemoveRange(shopingCart);
+            iUnit.SaveChange();
+
             return View(id);
         }
         //___ Next ___
