@@ -13,7 +13,8 @@ namespace Proj.Web.Areas.Customer.Controllers
     public class CartController : Controller
     {
         private readonly IUnitOfWork iUnit;
-        ShoppingCartVM vm = new ShoppingCartVM();
+        [BindProperty]
+        public ShoppingCartVM shoppingCartVM { get; set; }
 
         public CartController(IUnitOfWork _iUnit)
         {
@@ -78,30 +79,53 @@ namespace Proj.Web.Areas.Customer.Controllers
         //_____ CheckOut Screen ______
         public IActionResult CheckOut()
         {
-            ShoppingCartVM vm = new ShoppingCartVM();
             var claimIdentity = (ClaimsIdentity)User.Identity;
             var userId = claimIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-            vm.OrderHeader = new();
-            vm.ShoppingCartList = iUnit.ShoppingCart.GetAll(x => x.ApplicationUserId == userId, includeProperties: "Product");
+            shoppingCartVM.OrderHeader = new();
+            shoppingCartVM.ShoppingCartList = iUnit.ShoppingCart.GetAll(x => x.ApplicationUserId == userId, includeProperties: "Product");
 
             //___ Getting login user Data ____
-            vm.OrderHeader.ApplicationUser = iUnit.ApplicationUser.Get(u => u.Id == userId);
-            vm.OrderHeader.Name = vm.OrderHeader.ApplicationUser.Name;
-            vm.OrderHeader.PhoneNumber = vm.OrderHeader.ApplicationUser.PhoneNumber;
-            vm.OrderHeader.StreetAddress = vm.OrderHeader.ApplicationUser.StreetAddress;
-            vm.OrderHeader.City = vm.OrderHeader.ApplicationUser.City;
-            vm.OrderHeader.State = vm.OrderHeader.ApplicationUser.State;
-            vm.OrderHeader.PostCode = vm.OrderHeader.ApplicationUser.PostalCode;
+            shoppingCartVM.OrderHeader.ApplicationUser = iUnit.ApplicationUser.Get(u => u.Id == userId);
+            shoppingCartVM.OrderHeader.Name = shoppingCartVM.OrderHeader.ApplicationUser.Name;
+            shoppingCartVM.OrderHeader.PhoneNumber = shoppingCartVM.OrderHeader.ApplicationUser.PhoneNumber;
+            shoppingCartVM.OrderHeader.StreetAddress = shoppingCartVM.OrderHeader.ApplicationUser.StreetAddress;
+            shoppingCartVM.OrderHeader.City = shoppingCartVM.OrderHeader.ApplicationUser.City;
+            shoppingCartVM.OrderHeader.State = shoppingCartVM.OrderHeader.ApplicationUser.State;
+            shoppingCartVM.OrderHeader.PostCode = shoppingCartVM.OrderHeader.ApplicationUser.PostalCode;
 
             //___ Total price base on Quantity ___
-            foreach (var cart in vm.ShoppingCartList)
+            foreach (var cart in shoppingCartVM.ShoppingCartList)
             {
                 double price = GetPriceBaseOnQuantity(cart);
                 cart.Price = price;
-                vm.OrderHeader.OrderTotal += (price * cart.Count);
+                shoppingCartVM.OrderHeader.OrderTotal += (price * cart.Count);
             }
-            return View(vm);
+            return View(shoppingCartVM);
+        }
+        [HttpPost]
+        [ActionName("CheckOut")]
+        public IActionResult CheckOutPost()
+        {
+            var claimIdentity = (ClaimsIdentity)User.Identity;
+            var userId = claimIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            shoppingCartVM.ShoppingCartList = iUnit.ShoppingCart.GetAll(x => x.ApplicationUserId == userId, includeProperties: "Product");
+
+            //___ Getting login user Data ____
+            shoppingCartVM.OrderHeader.ApplicationUser = iUnit.ApplicationUser.Get(u => u.Id == userId);
+
+            //___ Total price base on Quantity ___
+            foreach (var cart in shoppingCartVM.ShoppingCartList)
+            {
+                double price = GetPriceBaseOnQuantity(cart);
+                cart.Price = price;
+                shoppingCartVM.OrderHeader.OrderTotal += (price * cart.Count);
+            }
+
+            //____ Company ____
+
+            return View(shoppingCartVM);
         }
 
         private double GetPriceBaseOnQuantity(ShoppingCart obj)
