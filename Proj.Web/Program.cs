@@ -6,6 +6,7 @@ using Proj.DataAccess.Repository;
 using Proj.DataAccess.Repository.IRepository;
 using Proj.Utility;
 using Proj.Web.Services;
+using Stripe;
 
 #region ------------------- Builder -------------------
 var builder = WebApplication.CreateBuilder(args);
@@ -72,6 +73,8 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+//___ Adding Stripe Api Secrite Key ______
+StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:PublishableKey").Get<string>();
 
 app.UseRouting();
 
