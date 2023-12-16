@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Proj.DataAccess.Repository.IRepository;
 using Proj.Models;
 using Proj.Models.ViewModel;
+using Proj.Utility;
 using System.Security.Claims;
 
 namespace Proj.Web.Areas.Customer.Controllers
@@ -112,6 +113,8 @@ namespace Proj.Web.Areas.Customer.Controllers
 
             shoppingCartVM.ShoppingCartList = iUnit.ShoppingCart.GetAll(x => x.ApplicationUserId == userId, includeProperties: "Product");
 
+            /*___________________ Shopping Header _______________________*/
+            #region Header
             //___ Getting login user Data ____
             shoppingCartVM.OrderHeader.ApplicationUser = iUnit.ApplicationUser.Get(u => u.Id == userId);
 
@@ -122,8 +125,27 @@ namespace Proj.Web.Areas.Customer.Controllers
                 cart.Price = price;
                 shoppingCartVM.OrderHeader.OrderTotal += (price * cart.Count);
             }
+            //___ Company ____
+            if(shoppingCartVM.OrderHeader.ApplicationUser.CompanyId.GetValueOrDefault() == 0)
+            {
+                //its Customer
+                shoppingCartVM.OrderHeader.PaymentStatus = SD.PaymentStatusPending;
+                shoppingCartVM.OrderHeader.OrderStatus = SD.StatusPending;
+            }
+            else
+            {
+                //its Company
+                shoppingCartVM.OrderHeader.PaymentStatus = SD.PaymentStatusDelayedPayment;
+                shoppingCartVM.OrderHeader.OrderStatus = SD.StatusApproved;
+            }
+            iUnit.OrderHeader.Add(shoppingCartVM.OrderHeader);
+            iUnit.SaveChange();
+            #endregion
 
-            //____ Company ____
+            /*___________________ Shopping Details _______________________*/
+            #region Detail
+
+            #endregion
 
             return View(shoppingCartVM);
         }
