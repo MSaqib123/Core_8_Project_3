@@ -106,7 +106,6 @@ namespace Proj.Web.Areas.Customer.Controllers
             }
             return View(shoppingCartVM);
         }
-
         [HttpPost]
         [ActionName("CheckOut")]
         public IActionResult CheckOutPOST()
@@ -178,11 +177,14 @@ namespace Proj.Web.Areas.Customer.Controllers
             //return View(shoppingCartVM);
             return RedirectToAction(nameof(OrderConfirmation),new {id = shoppingCartVM.OrderHeader.Id});
         }
-
         public IActionResult OrderConfirmation(int id)
         {
             return View(id);
         }
+        //___ Next ___
+        //proccess stripe integration for register account at
+        //https://stripe.com/
+        //Acd Testing Api to test Stripe
 
         private double GetPriceBaseOnQuantity(ShoppingCart obj)
         {
