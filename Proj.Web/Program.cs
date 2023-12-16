@@ -74,7 +74,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 //___ Adding Stripe Api Secrite Key ______
-StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:PublishableKey").Get<string>();
+StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey").Get<string>();
 
 app.UseRouting();
 
