@@ -144,7 +144,18 @@ namespace Proj.Web.Areas.Customer.Controllers
 
             /*___________________ Shopping Details _______________________*/
             #region Detail
-
+            foreach (var cart in shoppingCartVM.ShoppingCartList)
+            {
+                OrderDetail orderDetail = new()
+                {
+                    ProductId = cart.productId,
+                    OrderHeaderId = shoppingCartVM.OrderHeader.Id,
+                    Price = cart.Price,
+                    Count = cart.Count
+                };
+                iUnit.OrderDetail.Add(orderDetail);
+                iUnit.SaveChange();
+            }
             #endregion
 
             return View(shoppingCartVM);
