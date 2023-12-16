@@ -5,6 +5,7 @@ using Proj.DataAccess.Repository.IRepository;
 using Proj.Models;
 using Proj.Models.ViewModel;
 using Proj.Utility;
+using Stripe.Checkout;
 using System.Security.Claims;
 
 namespace Proj.Web.Areas.Customer.Controllers
@@ -40,8 +41,8 @@ namespace Proj.Web.Areas.Customer.Controllers
             }
             return View(vm);
         }
-        
-        
+
+
         //_____ minus Cart ______
         public IActionResult minus(int cartId)
         {
@@ -55,14 +56,14 @@ namespace Proj.Web.Areas.Customer.Controllers
                 cartFromDb.Count -= 1;
                 iUnit.ShoppingCart.Update(cartFromDb);
             }
-            
+
             iUnit.SaveChange();
             return RedirectToAction("Index");
         }
         //_____ plus Cart ______
         public IActionResult plus(int cartId)
         {
-            var cartFromDb = iUnit.ShoppingCart.Get(u=>u.Id == cartId);
+            var cartFromDb = iUnit.ShoppingCart.Get(u => u.Id == cartId);
             cartFromDb.Count += 1;
             iUnit.ShoppingCart.Update(cartFromDb);
             iUnit.SaveChange();
@@ -135,7 +136,7 @@ namespace Proj.Web.Areas.Customer.Controllers
                 shoppingCartVM.OrderHeader.OrderTotal += (price * cart.Count);
             }
             //___ Company ____
-            if(applicationUser.CompanyId.GetValueOrDefault() == 0)
+            if (applicationUser.CompanyId.GetValueOrDefault() == 0)
             {
                 //its Customer
                 shoppingCartVM.OrderHeader.PaymentStatus = SD.PaymentStatusPending;
@@ -167,15 +168,55 @@ namespace Proj.Web.Areas.Customer.Controllers
             }
             #endregion
 
-            //_____ Adding Stripe Proccessing ____________
-            if(applicationUser.CompanyId.GetValueOrDefault() == 0)
+            //_____ Adding Stripe Proccessing Logic ____________
+            #region Stripe Proccess
+            if (applicationUser.CompanyId.GetValueOrDefault() == 0)
             {
                 //its regular Customer account and need to Capture payment
                 //stripe logic
+                var domain = "http://localhost:5003/";
+                var options = new Stripe.Checkout.SessionCreateOptions
+                {
+                    SuccessUrl = domain + $"customer/cart/OrderConfirmation?id={shoppingCartVM.OrderHeader.Id}",
+                    CancelUrl = domain + $"customer/cart/index",
+                    LineItems = new List<SessionLineItemOptions>(),
+                    Mode = "payment",
+                };
+
+                //___ iterate all item in strape __
+                foreach (var item in shoppingCartVM.ShoppingCartList)
+                {
+                    var sessionLineItem = new SessionLineItemOptions
+                    {
+                        PriceData = new SessionLineItemPriceDataOptions
+                        {
+                            UnitAmount = (long)item.Price * 100,
+                            Currency = "usd",
+                            ProductData = new SessionLineItemPriceDataProductDataOptions
+                            {
+                                Name = item.Product.Title,
+                            }
+                        },
+                        Quantity = item.Count
+                    };
+                    options.LineItems.Add(sessionLineItem);
+                }
+                var service = new Stripe.Checkout.SessionService();
+                Session session = service.Create(options);
+                //_____ Note ______
+                //IntentId  will be  = null here 
+                // IntentId only  get when   payment is successlfuly done in strape
+                iUnit.OrderHeader.UpdateStripePaymentId(shoppingCartVM.OrderHeader.Id, session.Id, session.PaymentIntentId);
+                iUnit.SaveChange();
+
+                //____ Redirect ____
+                Response.Headers.Add("Location", session.Url);
+                return new StatusCodeResult(303);
             }
+            #endregion
 
             //return View(shoppingCartVM);
-            return RedirectToAction(nameof(OrderConfirmation),new {id = shoppingCartVM.OrderHeader.Id});
+            return RedirectToAction(nameof(OrderConfirmation), new { id = shoppingCartVM.OrderHeader.Id });
         }
         public IActionResult OrderConfirmation(int id)
         {

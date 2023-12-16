@@ -245,7 +245,7 @@ namespace Proj.DataAccess.Migrations
 
                     b.HasKey("CategoryId");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
 
                     b.HasData(
                         new
@@ -326,7 +326,7 @@ namespace Proj.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Companies");
+                    b.ToTable("Companies", (string)null);
 
                     b.HasData(
                         new
@@ -407,7 +407,7 @@ namespace Proj.DataAccess.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderDetails");
+                    b.ToTable("OrderDetails", (string)null);
                 });
 
             modelBuilder.Entity("Proj.Models.OrderHeader", b =>
@@ -483,7 +483,7 @@ namespace Proj.DataAccess.Migrations
 
                     b.HasIndex("ApplicationUserID");
 
-                    b.ToTable("orderHeaders");
+                    b.ToTable("orderHeaders", (string)null);
                 });
 
             modelBuilder.Entity("Proj.Models.Product", b =>
@@ -533,7 +533,7 @@ namespace Proj.DataAccess.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
 
                     b.HasData(
                         new
@@ -632,7 +632,7 @@ namespace Proj.DataAccess.Migrations
 
                     b.HasIndex("productId");
 
-                    b.ToTable("ShoppingCarts");
+                    b.ToTable("ShoppingCarts", (string)null);
                 });
 
             modelBuilder.Entity("Proj.Models.ApplicationUser", b =>
