@@ -52,9 +52,10 @@ builder.Services.ConfigureApplicationCookie(option =>
     option.LogoutPath = $"/Identity/Account/Logout";
     option.AccessDeniedPath = $"/Identity/Account/AccessDenied";
 });
-
-
 builder.Services.AddRazorPages();
+
+//___ Adding Stripe Configuration json value ______
+builder.Services.Configure<StripeSetting>(builder.Configuration.GetSection("Stripe"));
 #endregion
 
 
