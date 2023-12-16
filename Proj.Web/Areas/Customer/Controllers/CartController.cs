@@ -104,6 +104,7 @@ namespace Proj.Web.Areas.Customer.Controllers
             }
             return View(shoppingCartVM);
         }
+
         [HttpPost]
         [ActionName("CheckOut")]
         public IActionResult CheckOutPost()
@@ -158,7 +159,20 @@ namespace Proj.Web.Areas.Customer.Controllers
             }
             #endregion
 
-            return View(shoppingCartVM);
+            //_____ Adding Stripe Proccessing ____________
+            if(shoppingCartVM.OrderHeader.ApplicationUser.CompanyId.GetValueOrDefault() == 0)
+            {
+                //its regular Customer account and need to Capture payment
+                //stripe logic
+            }
+
+            //return View(shoppingCartVM);
+            return RedirectToAction(nameof(OrderConfirmation),new {id = shoppingCartVM.OrderHeader.Id});
+        }
+
+        public IActionResult OrderConfirmation(int id)
+        {
+            return View(id);
         }
 
         private double GetPriceBaseOnQuantity(ShoppingCart obj)
