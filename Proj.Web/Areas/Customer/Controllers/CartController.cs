@@ -109,13 +109,14 @@ namespace Proj.Web.Areas.Customer.Controllers
 
         [HttpPost]
         [ActionName("CheckOut")]
-        public IActionResult CheckOutPost()
+        public IActionResult CheckOutPOST()
         {
             var claimIdentity = (ClaimsIdentity)User.Identity;
             var userId = claimIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
 
             shoppingCartVM.ShoppingCartList = iUnit.ShoppingCart.GetAll(x => x.ApplicationUserId == userId, includeProperties: "Product");
-            
+
+            //___ Getting login user Data ____
             //_____ Error Due to navigation Property
             //shoppingCartVM.OrderHeader.ApplicationUser = iUnit.ApplicationUser.Get(u => u.Id == userId);
             ApplicationUser applicationUser = iUnit.ApplicationUser.Get(u => u.Id == userId);
@@ -126,9 +127,6 @@ namespace Proj.Web.Areas.Customer.Controllers
             shoppingCartVM.OrderHeader.OrderDate = DateTime.Now;
             shoppingCartVM.OrderHeader.ApplicationUserID = userId;
 
-
-            //___ Getting login user Data ____
-            shoppingCartVM.OrderHeader.ApplicationUser = iUnit.ApplicationUser.Get(u => u.Id == userId);
 
             //___ Total price base on Quantity ___
             foreach (var cart in shoppingCartVM.ShoppingCartList)

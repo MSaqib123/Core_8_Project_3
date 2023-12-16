@@ -13,6 +13,8 @@
         background: linear - gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1))
     }
 </script>
+
+<form method="post">
 <section class="h-100 gradient-custom">
     <div class="container py-5">
         <div class="row d-flex justify-content-center my-4">
@@ -102,13 +104,13 @@
                                 </li>
                             </ul>
 
-                            <a asp-action="CheckOut" class="btn btn-primary btn-lg btn-block">
+                            <button type="submit" class="btn btn-primary btn-lg btn-block">
                                 Buy Product
-                            </a>
+                            </button>
                         </div>
                     </div>
                 </div>
-            }
+            } 
             else
             {
                 <h1 class="display-5">There is No Any Cart</h1>
@@ -116,3 +118,4 @@
         </div>
     </div>
 </section>
+</form>
