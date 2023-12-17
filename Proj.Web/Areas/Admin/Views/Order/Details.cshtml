@@ -18,6 +18,9 @@
     <section class="h-100 gradient-custom">
         <div class="container pt-1">
             <div class="row d-flex justify-content-center my-4">
+                <div>
+                    <a class="btn btn-sm btn-primary" asp-area="Admin" asp-controller="Order" asp-action="Index">Back to Orders</a>
+                </div>
                 @*____________ Left Side _________*@
                 <div class="col-md-8">
                     <div class="card mb-4">
@@ -266,8 +269,11 @@
 
                         </div>
                     </div>
-                   
-                    <button class="btn btn-warning w-100">Submit</button>
+                   @if(User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
+                    {
+                                            
+                        <button class="btn btn-warning w-100">Submit</button>
+                    }
                 </div>
                 @*____________ Right Side _________*@
                 <div class="col-md-4">
