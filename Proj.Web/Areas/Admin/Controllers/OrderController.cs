@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Proj.DataAccess.Repository.IRepository;
 using Proj.Models;
+using Proj.Models.ViewModel;
 using Proj.Utility;
+using Stripe.Climate;
 
 namespace Proj.Web.Areas.Admin.Controllers
 {
@@ -9,6 +11,8 @@ namespace Proj.Web.Areas.Admin.Controllers
     public class OrderController : Controller
     {
         private readonly IUnitOfWork iUnit;
+        [BindProperty]
+        public OrderVM orderVM { get; set; }
         public OrderController(IUnitOfWork _iUnit)
         {
             iUnit = _iUnit;
@@ -17,6 +21,14 @@ namespace Proj.Web.Areas.Admin.Controllers
         public IActionResult Index()
         {
             return View();
+        }
+
+        public IActionResult Details(int orderId)
+        {
+            orderVM = new OrderVM();
+            orderVM.OrderHeader = iUnit.OrderHeader.Get(x => x.Id == orderId);
+            orderVM.OrderDetail = iUnit.OrderDetail.GetAll(x => x.OrderHeaderId == orderId).ToList();
+            return View(orderVM);
         }
 
 

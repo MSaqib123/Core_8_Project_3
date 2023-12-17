@@ -39,7 +39,7 @@ function loadDataTabel(status) {
                 data: 'id',
                 "render": function (data) {
                     return `
-                            <a href="/Admin/Order/Upsert?id=${data}" class="btn btn-primary">Edit</a>
+                            <a href="/Admin/Order/Details?orderId=${data}" class="btn btn-primary">Edit</a>
                         `}
             },
         ]
