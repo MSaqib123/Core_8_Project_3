@@ -34,7 +34,14 @@
                                             <label>Name</label>
                                         </div>
                                         <div class="col-8">
-                                            <input class="form form-control" placeholder="Enter Name" asp-for="OrderHeader.Name" />
+                                            @if(User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
+                                            {
+                                                <input class="form form-control" placeholder="Enter Name" asp-for="OrderHeader.Name" />
+                                            }
+                                            else
+                                            {
+                                                <input class="form form-control" readonly placeholder="Enter Name" asp-for="OrderHeader.Name" />
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -44,7 +51,13 @@
                                             <label>Phone</label>
                                         </div>
                                         <div class="col-8">
-                                            <input class="form form-control" placeholder="Enter Phone" asp-for="OrderHeader.PhoneNumber" />
+                                            @if(User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
+                                            {
+                                                <input class="form form-control" placeholder="Enter Phone" asp-for="OrderHeader.PhoneNumber" />
+                                            }
+                                            else{
+                                                <input class="form form-control" readonly placeholder="Enter Phone" asp-for="OrderHeader.PhoneNumber" />
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -55,8 +68,14 @@
                                             <label>Address</label>
                                         </div>
                                         <div class="col-8">
-
-                                            <input class="form form-control" placeholder="Enter Address" asp-for="OrderHeader.StreetAddress" />
+                                            @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
+                                            {
+                                                <input class="form form-control" placeholder="Enter Address" asp-for="OrderHeader.StreetAddress" />
+                                            }
+                                            else
+                                            {    
+                                               <input class="form form-control" readonly placeholder="Enter Address" asp-for="OrderHeader.StreetAddress" />
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -67,7 +86,14 @@
                                             <label>City</label>
                                         </div>
                                         <div class="col-8">
-                                            <input class="form form-control" placeholder="Enter City" asp-for="OrderHeader.City" />
+                                            @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
+                                            {
+                                                <input class="form form-control" placeholder="Enter City" asp-for="OrderHeader.City" />
+                                            }
+                                            else
+                                            {
+                                                <input class="form form-control" readonly placeholder="Enter City" asp-for="OrderHeader.City" />
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -78,7 +104,14 @@
                                             <label>State</label>
                                         </div>
                                         <div class="col-8">
-                                            <input class="form form-control" placeholder="Enter State" asp-for="OrderHeader.State" />
+                                            @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
+                                            { 
+                                                <input class="form form-control" placeholder="Enter State" asp-for="OrderHeader.State" />
+                                            }
+                                            else
+                                            {
+                                                <input class="form form-control" readonly placeholder="Enter State" asp-for="OrderHeader.State" />
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -89,7 +122,14 @@
                                             <label>Postal Code</label>
                                         </div>
                                         <div class="col-8">
-                                            <input class="form form-control" placeholder="Enter PostalCode" asp-for="OrderHeader.PostCode" />
+                                            @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
+                                            { 
+                                                <input class="form form-control" placeholder="Enter PostalCode" asp-for="OrderHeader.PostCode" />
+                                            }
+                                            else
+                                            {
+                                                <input class="form form-control" readonly placeholder="Enter PostalCode" asp-for="OrderHeader.PostCode" />
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -100,7 +140,7 @@
                                             <label>Email</label>
                                         </div>
                                         <div class="col-8">
-                                            <input class="form form-control" placeholder="Enter PostalCode" asp-for="OrderHeader.PostCode" />
+                                             <input class="form form-control" readonly placeholder="Enter PostalCode" asp-for="OrderHeader.ApplicationUser.Email" />
                                         </div>
                                     </div>
                                 </div>
@@ -111,7 +151,7 @@
                                             <label>Order Date</label>
                                         </div>
                                         <div class="col-8">
-                                            <input class="form form-control" placeholder="Enter PostalCode" asp-for="OrderHeader.PostCode" />
+                                            <input class="form form-control" readonly placeholder="Enter PostalCode" value="@Model.OrderHeader.OrderDate.ToShortDateString()" />
                                         </div>
                                     </div>
                                 </div>
@@ -122,7 +162,12 @@
                                             <label>Carrier</label>
                                         </div>
                                         <div class="col-8">
-                                            <input class="form form-control" placeholder="Enter PostalCode" asp-for="OrderHeader.PostCode" />
+                                            @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
+                                            { 
+                                                <input class="form form-control" placeholder="Enter Carrier" asp-for="OrderHeader.Carrier" />
+                                            }else{
+                                                <input class="form form-control" readonly placeholder="Enter Carrier" asp-for="OrderHeader.Carrier" />
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -133,7 +178,13 @@
                                             <label>Tracking Number</label>
                                         </div>
                                         <div class="col-8">
-                                            <input class="form form-control" placeholder="Enter PostalCode" asp-for="OrderHeader.PostCode" />
+                                            @if(User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
+                                            {
+                                                <input class="form form-control" placeholder="Enter TrackingNumber" asp-for="OrderHeader.TrackingNumber" />
+                                            }
+                                            else{
+                                                <input class="form form-control" placeholder="Enter TrackingNumber" readonly asp-for="OrderHeader.TrackingNumber" />
+                                            } 
                                         </div>
                                     </div>
                                 </div>
@@ -144,54 +195,61 @@
                                             <label>Shipped Date</label>
                                         </div>
                                         <div class="col-8">
-                                            <input class="form form-control" placeholder="Enter PostalCode" asp-for="OrderHeader.PostCode" />
+                                            <input class="form form-control" placeholder="Enter ShippingDate" readonly value="@Model.OrderHeader.ShippingDate" />
                                         </div>
                                     </div>
                                 </div>
                                 <!-- Single item -->
-                                <div class="col-12">
-                                    <div class="row mb-3 ">
-                                        <div class="col-4">
-                                            <label>Session Id</label>
-                                        </div>
-                                        <div class="col-8">
-                                            <input class="form form-control" placeholder="Enter PostalCode" asp-for="OrderHeader.PostCode" />
+                                @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
+                                {
+                                    <div class="col-12">
+                                        <div class="row mb-3 ">
+                                            <div class="col-4">
+                                                <label>Session Id</label>
+                                            </div>
+                                            <div class="col-8">
+                                                <input class="form form-control" placeholder="Enter PostalCode" readonly asp-for="OrderHeader.SessionId" />
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                    <!-- Single item -->
+                                    <div class="col-12">
+                                        <div class="row mb-3 ">
+                                            <div class="col-4">
+                                                <label>Payment Intent ID</label>
+                                            </div>
+                                            <div class="col-8">
+                                                <input class="form form-control" placeholder="Enter PostalCode" readonly asp-for="OrderHeader.PaymentIntentId" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
                                 <!-- Single item -->
                                 <div class="col-12">
                                     <div class="row mb-3 ">
-                                        <div class="col-4">
-                                            <label>Payment Intent ID</label>
-                                        </div>
-                                        <div class="col-8">
-                                            <input class="form form-control" placeholder="Enter PostalCode" asp-for="OrderHeader.PostCode" />
-                                        </div>
+                                        @if (Model.OrderHeader.SessionId == null)
+                                        {
+                                            <div class="col-4">
+                                                <label>Payment Due Date</label>
+                                            </div>
+                                            <div class="col-8">
+
+                                                <input class="form form-control" placeholder="Enter PostalCode" readonly asp-for="OrderHeader.PaymentDueDate" />
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="col-4">
+                                                <label>Payment Date</label>
+                                            </div>
+                                            <div class="col-8">
+                                                <input class="form form-control" placeholder="Enter PostalCode" readonly asp-for="OrderHeader.PaymentDate" />
+                                            </div>
+                                        }
+
                                     </div>
                                 </div>
-                                <!-- Single item -->
-                                <div class="col-12">
-                                    <div class="row mb-3 ">
-                                        <div class="col-4">
-                                            <label>Payment Due Date</label>
-                                        </div>
-                                        <div class="col-8">
-                                            <input class="form form-control" placeholder="Enter PostalCode" asp-for="OrderHeader.PostCode" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Single item -->
-                                <div class="col-12">
-                                    <div class="row mb-3 ">
-                                        <div class="col-4">
-                                            <label>Payment Date</label>
-                                        </div>
-                                        <div class="col-8">
-                                            <input class="form form-control" placeholder="Enter PostalCode" asp-for="OrderHeader.PostCode" />
-                                        </div>
-                                    </div>
-                                </div>
+                                
                                 <!-- Single item -->
                                 <div class="col-12">
                                     <div class="row mb-3 ">
@@ -199,7 +257,7 @@
                                             <label>Payment Status</label>
                                         </div>
                                         <div class="col-8">
-                                            <input class="form form-control" placeholder="Enter PostalCode" asp-for="OrderHeader.PostCode" />
+                                            <input class="form form-control" placeholder="Enter PostalCode" readonly asp-for="OrderHeader.PaymentStatus" />
                                         </div>
                                     </div>
                                 </div>
