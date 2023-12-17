@@ -17,7 +17,6 @@ namespace Proj.Web.Areas.Customer.Controllers
         }
 
 
-
         //_______________________ APis _______________________
         #region Apis work
         [HttpGet]
