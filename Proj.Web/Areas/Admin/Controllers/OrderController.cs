@@ -27,7 +27,7 @@ namespace Proj.Web.Areas.Admin.Controllers
         {
             orderVM = new OrderVM();
             orderVM.OrderHeader = iUnit.OrderHeader.Get(x => x.Id == orderId);
-            orderVM.OrderDetail = iUnit.OrderDetail.GetAll(x => x.OrderHeaderId == orderId).ToList();
+            orderVM.OrderDetail = iUnit.OrderDetail.GetAll(x => x.OrderHeaderId == orderId, includeProperties:"Product").ToList();
             return View(orderVM);
         }
 
