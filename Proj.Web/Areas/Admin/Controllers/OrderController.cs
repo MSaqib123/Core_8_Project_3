@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Proj.DataAccess.Repository.IRepository;
 
-namespace Proj.Web.Areas.Customer.Controllers
+namespace Proj.Web.Areas.Admin.Controllers
 {
     public class OrderController : Controller
     {
