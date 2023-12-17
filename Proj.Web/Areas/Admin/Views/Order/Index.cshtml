@@ -1,41 +1,24 @@
 ﻿@model List<Product>
-<script src="~/js/productdata.js"></script>
+<script src="~/js/orderData.js"></script>
 <div class="container">
 
     <div class="d-flex justify-content-between align-content-center align-items-center my-4 ">
-        <h1>Categories</h1>
+        <h1>Orders List</h1>
         <a class="btn btn-primary" asp-action="Upsert" asp-controller="Product">Create</a>
     </div>
     <table id="tblData" class="table">
         <thead>
             <tr>
-                <td>id</td>
-                <td>titel</td>
-                <td>author</td>
-                <td>isbn</td>
-                <td>price</td>
-                <td>category</td>
+                <td>Id</td>
+                <td>Name</td>
+                <td>Phone Number</td>
+                <td>Email</td>
+                <td>Status</td>
+                <td>Total</td>
                 <td></td>
             </tr>
         </thead>
         <tbody>
-            @{
-                //foreach (var item in Model)
-                //{
-                //    <tr>
-                //        <td>@item.Id</td>
-                //        <td>@item.Title</td>
-                //        <td>@item.Author</td>
-                //        <td>@item.ISBN</td>
-                //        <td>@item.Price</td>
-                //        <td>@item.Category.Name</td>
-                //<td>
-                //    <a class="btn btn-primary" asp-controller="Product" asp-action="Upsert" asp-route-id="@item.Id">Edit</a>
-                //    <a class="btn btn-danger" asp-controller="Product" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                //</td>
-                //    </tr>
-                //}
-            }
         </tbody>
     </table>
 </div>
