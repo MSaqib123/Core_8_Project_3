@@ -6,6 +6,28 @@
         <h1>Orders List</h1>
         <a class="btn btn-primary" asp-action="Upsert" asp-controller="Product">Create</a>
     </div>
+
+    <div class="d-flex justify-content-between align-content-center align-items-center my-4 ">
+        <span></span>
+        <ul class="list-group list-group-horizontal-sm">
+            <a style="text-decoration:none" asp-controller="Order" asp-action="Index" asp-route-status="inprogress">
+                <li class="list-group-item">In Progress</li>
+            </a>
+            <a style="text-decoration:none" asp-controller="Order" asp-action="Index" asp-route-status="pending">
+                <li class="list-group-item">Payment Pending</li>
+            </a>
+            <a style="text-decoration:none" asp-controller="Order" asp-action="Index" asp-route-status="completed">
+                <li class="list-group-item">Completed</li>
+            </a>
+            <a style="text-decoration:none" asp-controller="Order" asp-action="Index" asp-route-status="approved">
+                <li class="list-group-item">Approved</li>
+            </a>
+            <a style="text-decoration:none" asp-controller="Order" asp-action="Index" asp-route-status="all">
+                <li class="list-group-item">All</li>
+            </a>
+        </ul>
+    </div>
+
     <table id="tblData" class="table">
         <thead>
             <tr>

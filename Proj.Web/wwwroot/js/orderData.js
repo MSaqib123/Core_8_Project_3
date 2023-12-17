@@ -9,7 +9,7 @@ $(document).ready(function () {
                 { data: 'id' , "width":"10%"},
                 { data: 'name', "width": "20%" },
                 { data: 'phoneNumber', "width": "20%" },
-                { data: 'applicationUser.email', "width": "20%" },
+                { data: 'applicationUser.email', "width": "20%" },  
                 { data: 'orderStatus', "width": "15%" },
                 { data: 'orderTotal', "width": "10%" },
                 {
