@@ -3,6 +3,7 @@ using Proj.DataAccess.Repository.IRepository;
 
 namespace Proj.Web.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class OrderController : Controller
     {
         private readonly IUnitOfWork iUnit;
@@ -22,7 +23,7 @@ namespace Proj.Web.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var list = iUnit.Product.GetAll(includeProperties: "Category").ToList();
+            var list = iUnit.OrderHeader.GetAll(includeProperties: "ApplicationUser").ToList();
             return Json(new { data = list });
         }
 
