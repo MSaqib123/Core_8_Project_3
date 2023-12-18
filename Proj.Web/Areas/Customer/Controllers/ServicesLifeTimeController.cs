@@ -49,6 +49,8 @@ namespace Proj.Web.Areas.Customer.Controllers
             str.Append($"Transient 1 : {_Trans1.GetGuild()} \n");
             str.Append($"Transient 2 : {_Trans2.GetGuild()} \n");
 
+
+
             return Ok(str.ToString());
         }
     }
