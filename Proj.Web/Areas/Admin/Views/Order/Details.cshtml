@@ -272,7 +272,7 @@
                    @if(User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
                     {
                                             
-                        <button class="btn btn-warning w-100">Submit</button>
+                        <button class="btn btn-warning w-100" type="submit" asp-controller="UpdateOrderDetail">Submit</button>
                     }
                 </div>
                 @*____________ Right Side _________*@

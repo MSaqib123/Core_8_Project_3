@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Proj.DataAccess.Repository.IRepository;
 using Proj.Models;
 using Proj.Models.ViewModel;
@@ -30,6 +31,17 @@ namespace Proj.Web.Areas.Admin.Controllers
             orderVM.OrderDetail = iUnit.OrderDetail.GetAll(x => x.OrderHeaderId == orderId, includeProperties:"Product").ToList();
             return View(orderVM);
         }
+
+        [HttpPost]
+        [Authorize(SD.Role_Employee +","+SD.Role_Admin)]
+        public IActionResult UpdateOrderDetail()
+        {
+            //orderVM.OrderHeader = iUnit.OrderHeader.Get(x => x.Id == orderId);
+            //orderVM.OrderDetail = iUnit.OrderDetail.GetAll(x => x.OrderHeaderId == orderId, includeProperties:"Product").ToList();
+            //return View(orderVM);
+            return RedirectToAction("Index");
+        }
+
 
 
         //_______________________ APis _______________________
