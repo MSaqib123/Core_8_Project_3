@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.ValueGeneration.Internal;
 using Proj.DataAccess.Repository.IRepository;
 using Proj.Models;
 using Proj.Models.ViewModel;
@@ -36,10 +37,28 @@ namespace Proj.Web.Areas.Admin.Controllers
         [Authorize(SD.Role_Employee +","+SD.Role_Admin)]
         public IActionResult UpdateOrderDetail()
         {
-            //orderVM.OrderHeader = iUnit.OrderHeader.Get(x => x.Id == orderId);
-            //orderVM.OrderDetail = iUnit.OrderDetail.GetAll(x => x.OrderHeaderId == orderId, includeProperties:"Product").ToList();
-            //return View(orderVM);
-            return RedirectToAction("Index");
+            var orderHdr = iUnit.OrderHeader.Get(x=>x.Id == orderVM.OrderHeader.Id);
+            orderHdr.Name = orderVM.OrderHeader.Name;
+            orderHdr.Name = orderVM.OrderHeader.PhoneNumber;
+            orderHdr.Name = orderVM.OrderHeader.StreetAddress;
+            orderHdr.Name = orderVM.OrderHeader.City;
+            orderHdr.Name = orderVM.OrderHeader.State;
+            orderHdr.Name = orderVM.OrderHeader.PostCode;
+            if (!string.IsNullOrEmpty(orderVM.OrderHeader.Carrier))
+            {
+                orderHdr.Carrier = orderVM.OrderHeader.Carrier;
+            }
+            
+            if (!string.IsNullOrEmpty(orderVM.OrderHeader.TrackingNumber))
+            {
+                orderHdr.Carrier = orderVM.OrderHeader.TrackingNumber;
+            }
+            iUnit.OrderHeader.Update(orderHdr);
+            iUnit.SaveChange();
+
+            TempData["Success"] = "Order Updated Successfully";
+            
+            return RedirectToAction(nameof(Details), new {orderId=orderHdr.Id});
         }
 
 

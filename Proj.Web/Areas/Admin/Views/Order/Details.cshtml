@@ -21,6 +21,7 @@
                 <div>
                     <a class="btn btn-sm btn-primary" asp-area="Admin" asp-controller="Order" asp-action="Index">Back to Orders</a>
                 </div>
+                <input type="hidden" value="@Model.OrderHeader.Id" />
                 @*____________ Left Side _________*@
                 <div class="col-md-8">
                     <div class="card mb-4">
