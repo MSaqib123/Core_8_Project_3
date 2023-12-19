@@ -310,22 +310,44 @@
                                 <span>@Model.OrderHeader.OrderTotal</span>
                             </li>
                         </div>
+
+                        @*____ Pay now _____*@
+                        @if(Model.OrderHeader.PaymentStatus == SD.PaymentStatusDelayedPayment &&
+                           Model.OrderHeader.OrderStatus == SD.StatusShipped){
+                            <button type="submit" class="btn btn-success btn-sm btn-block mb-2">
+                                PAY NOW
+                            </button>
+                        }
+
+                        @*____ Pay now _____*@
+                        @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
+                        {
+                            if (Model.OrderHeader.OrderStatus == SD.StatusApproved)
+                            {
+                                <button type="submit" class="btn btn-secondary btn-sm btn-block mb-2">
+                                    START PROCESSING
+                                </button>
+                            }
+                            if (Model.OrderHeader.OrderStatus == SD.StatusInProcess)
+                            {
+                                <button type="submit" class="btn btn-secondary btn-sm btn-block mb-2">
+                                    SHIP ORDER
+                                </button>
+                            }
+
+                            if (Model.OrderHeader.OrderStatus == SD.StatusRefunded &&
+                                Model.OrderHeader.OrderStatus == SD.StatusCancelled &&
+                                Model.OrderHeader.OrderStatus == SD.StatusShipped
+                            )
+                            { 
+                                <button type="submit" class="btn btn-danger btn-sm btn-block mb-2">
+                                    CANCEL ORDER
+                                </button>
+                            }
+                        }
+
                         
-                        <button type="submit" class="btn btn-success btn-sm btn-block mb-2">
-                            PAY NOW
-                        </button>
 
-                        <button type="submit" class="btn btn-secondary btn-sm btn-block mb-2">
-                            START PROCESSING
-                        </button>
-
-                        <button type="submit" class="btn btn-secondary btn-sm btn-block mb-2">
-                            SHIP ORDER
-                        </button>
-
-                        <button type="submit" class="btn btn-danger btn-sm btn-block mb-2">
-                            CANCEL ORDER
-                        </button>
                     </div>
                 </div>
             </div>
