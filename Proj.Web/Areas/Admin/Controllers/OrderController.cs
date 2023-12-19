@@ -6,6 +6,7 @@ using Proj.Models;
 using Proj.Models.ViewModel;
 using Proj.Utility;
 using Stripe.Climate;
+using System.Security.Claims;
 
 namespace Proj.Web.Areas.Admin.Controllers
 {
@@ -61,14 +62,23 @@ namespace Proj.Web.Areas.Admin.Controllers
             return RedirectToAction(nameof(Details), new {orderId=orderHdr.Id});
         }
 
-
-
         //_______________________ APis _______________________
         #region Apis work
         [HttpGet]
         public IActionResult GetAll(string status)
         {
-            IEnumerable<OrderHeader> list = iUnit.OrderHeader.GetAll(includeProperties: "ApplicationUser").ToList();
+            IEnumerable<OrderHeader> list;
+            if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
+            {
+                list = iUnit.OrderHeader.GetAll(includeProperties: "ApplicationUser").ToList();
+            }
+            else
+            {
+                var claimIdentity = (ClaimsIdentity)User.Identity;
+                var userId = claimIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+                list = iUnit.OrderHeader.GetAll(x=>x.ApplicationUserID == userId,includeProperties: "ApplicationUser").ToList();
+            }
+            
             switch (status)
             {
                 case "pending":
