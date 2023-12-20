@@ -167,8 +167,8 @@
                                         </div>
                                         <div class="col-8">
                                             @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
-                                            { 
-                                                <input class="form form-control" placeholder="Enter Carrier" asp-for="OrderHeader.Carrier" />
+                                            {
+                                                <input class="form form-control" placeholder="Enter Carrier" asp-for="OrderHeader.Carrier" id="carrier" />
                                             }else{
                                                 <input class="form form-control" readonly placeholder="Enter Carrier" asp-for="OrderHeader.Carrier" />
                                             }
@@ -184,7 +184,7 @@
                                         <div class="col-8">
                                             @if(User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
                                             {
-                                                <input class="form form-control" placeholder="Enter TrackingNumber" asp-for="OrderHeader.TrackingNumber" />
+                                                <input class="form form-control" placeholder="Enter TrackingNumber" asp-for="OrderHeader.TrackingNumber" id="trackingNumber" />
                                             }
                                             else{
                                                 <input class="form form-control" placeholder="Enter TrackingNumber" readonly asp-for="OrderHeader.TrackingNumber" />
@@ -330,7 +330,7 @@
                             }
                             if (Model.OrderHeader.OrderStatus == SD.StatusInProcess)
                             {
-                                <button type="submit" class="btn btn-secondary btn-sm btn-block mb-2">
+                                <button type="submit" class="btn btn-secondary btn-sm btn-block mb-2" onclick="return validationInput()" asp-action="">
                                     SHIP ORDER
                                 </button>
                             }
@@ -354,3 +354,30 @@
         </div>
     </section>
 </form>
+
+@section scripts{
+    <partial name="_ValidationScriptsPartial"/>
+    <script>
+        function validationInput(){
+
+            if(document.getElementById("trackingNumber").value == ""){
+                Swal.fire({
+                    icon:'error',
+                    tital: 'Oops',
+                    text:"Please enter tracking number "
+                })
+                return false; // Prevent form submission
+            }
+            if (document.getElementById("carrier").value == "") {
+                Swal.fire({
+                    icon: 'error',
+                    tital: 'Oops',
+                    text: "Please enter Carrier"
+                })
+                return false; // Prevent form submission
+            }
+
+            return true; // Prevent form submission
+        }
+    </script>
+}
