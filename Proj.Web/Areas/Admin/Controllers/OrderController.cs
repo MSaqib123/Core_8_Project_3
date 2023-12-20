@@ -83,7 +83,7 @@ namespace Proj.Web.Areas.Admin.Controllers
             orderHdr.ShippingDate = DateTime.Now;
             if(orderHdr.PaymentStatus == SD.PaymentStatusDelayedPayment)
             {
-                orderHdr.PaymentStatus = DateTime.Now.AddDays(30).ToString();
+                orderHdr.PaymentDueDate = DateTime.Now.AddDays(30);
             }
             //iUnit.OrderHeader.UpdateStatus(orderVM.OrderHeader.Id, SD.StatusShipped);
             iUnit.OrderHeader.Update(orderHdr);
