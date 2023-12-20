@@ -35,7 +35,7 @@ namespace Proj.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        [Authorize(SD.Role_Employee +","+SD.Role_Admin)]
+        [Authorize(Roles = SD.Role_Employee +","+SD.Role_Admin)]
         public IActionResult UpdateOrderDetail()
         {
             var orderHdr = iUnit.OrderHeader.Get(x=>x.Id == orderVM.OrderHeader.Id);
@@ -61,6 +61,17 @@ namespace Proj.Web.Areas.Admin.Controllers
             
             return RedirectToAction(nameof(Details), new {orderId=orderHdr.Id});
         }
+
+        [HttpPost]
+        [Authorize(Roles = SD.Role_Employee + " , " + SD.Role_Admin)]
+        public IActionResult StartProcess()
+        {
+            iUnit.OrderHeader.UpdateStatus(orderVM.OrderHeader.Id, SD.StatusInProcess);
+            iUnit.SaveChange();
+            TempData["Success"] = "Order Details Update Successfully";
+            return RedirectToAction(nameof(Details), new { orderId = orderVM.OrderHeader.Id });
+        }
+
 
         //_______________________ APis _______________________
         #region Apis work
