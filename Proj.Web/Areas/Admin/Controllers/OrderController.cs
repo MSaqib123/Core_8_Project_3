@@ -71,6 +71,26 @@ namespace Proj.Web.Areas.Admin.Controllers
             TempData["Success"] = "Order Details Update Successfully";
             return RedirectToAction(nameof(Details), new { orderId = orderVM.OrderHeader.Id });
         }
+        
+        [HttpPost]
+        [Authorize(Roles = SD.Role_Employee + " , " + SD.Role_Admin)]
+        public IActionResult ShipOrder()
+        {
+            var orderHdr = iUnit.OrderHeader.Get(x => x.Id == orderVM.OrderHeader.Id);
+            orderHdr.TrackingNumber = orderVM.OrderHeader.TrackingNumber;
+            orderHdr.Carrier = orderVM.OrderHeader.Carrier;
+            orderHdr.OrderStatus = SD.StatusShipped;
+            orderHdr.ShippingDate = DateTime.Now;
+            if(orderHdr.PaymentStatus == SD.PaymentStatusDelayedPayment)
+            {
+                orderHdr.PaymentStatus = DateTime.Now.AddDays(30).ToString();
+            }
+            //iUnit.OrderHeader.UpdateStatus(orderVM.OrderHeader.Id, SD.StatusShipped);
+            iUnit.OrderHeader.Add(orderHdr);
+            iUnit.SaveChange();
+            TempData["Success"] = "Order Details Update Successfully";
+            return RedirectToAction(nameof(Details), new { orderId = orderVM.OrderHeader.Id });
+        }
 
 
         //_______________________ APis _______________________
