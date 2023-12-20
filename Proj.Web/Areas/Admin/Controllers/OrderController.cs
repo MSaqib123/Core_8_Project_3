@@ -5,6 +5,7 @@ using Proj.DataAccess.Repository.IRepository;
 using Proj.Models;
 using Proj.Models.ViewModel;
 using Proj.Utility;
+using Stripe;
 using Stripe.Climate;
 using System.Security.Claims;
 
@@ -92,6 +93,31 @@ namespace Proj.Web.Areas.Admin.Controllers
             return RedirectToAction(nameof(Details), new { orderId = orderVM.OrderHeader.Id });
         }
 
+
+        [HttpPost]
+        [Authorize(Roles = SD.Role_Employee + " , " + SD.Role_Admin)]
+        public IActionResult CancelOrder()
+        {
+            var orderHdr = iUnit.OrderHeader.Get(x => x.Id == orderVM.OrderHeader.Id);
+            if(orderHdr.PaymentStatus == SD.PaymentStatusApproved)
+            {
+                var options = new RefundCreateOptions
+                {
+                    Reason = RefundReasons.RequestedByCustomer,
+                    PaymentIntent = orderHdr.PaymentIntentId
+                };
+                var service = new RefundService();
+                Refund refund = service.Create(options);
+                iUnit.OrderHeader.UpdateStatus(orderHdr.Id, SD.StatusCancelled, SD.StatusRefunded);
+            }
+            else
+            {
+                iUnit.OrderHeader.UpdateStatus(orderHdr.Id, SD.StatusCancelled, SD.StatusCancelled);
+            }
+            iUnit.SaveChange();
+            TempData["Success"] = "Order Cancelled Successfully";
+            return RedirectToAction(nameof(Details), new { orderId = orderVM.OrderHeader.Id });
+        }
 
         //_______________________ APis _______________________
         #region Apis work
