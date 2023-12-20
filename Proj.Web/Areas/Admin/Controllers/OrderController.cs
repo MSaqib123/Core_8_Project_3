@@ -86,7 +86,7 @@ namespace Proj.Web.Areas.Admin.Controllers
                 orderHdr.PaymentStatus = DateTime.Now.AddDays(30).ToString();
             }
             //iUnit.OrderHeader.UpdateStatus(orderVM.OrderHeader.Id, SD.StatusShipped);
-            iUnit.OrderHeader.Add(orderHdr);
+            iUnit.OrderHeader.Update(orderHdr);
             iUnit.SaveChange();
             TempData["Success"] = "Order Details Update Successfully";
             return RedirectToAction(nameof(Details), new { orderId = orderVM.OrderHeader.Id });
