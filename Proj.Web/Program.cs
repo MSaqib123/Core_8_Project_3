@@ -57,6 +57,19 @@ builder.Services.AddRazorPages();
 
 //___ Adding Stripe Configuration json value ______
 builder.Services.Configure<StripeSetting>(builder.Configuration.GetSection("Stripe"));
+
+//______ Session _____________
+//in .net Core  the Session is need be configure
+//adding session to services
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(option =>
+{
+    option.IdleTimeout = TimeSpan.FromMinutes(100);
+    option.Cookie.HttpOnly = true;
+    option.Cookie.IsEssential = true;
+});
+
+
 #endregion
 
 
@@ -80,6 +93,9 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+//_____ Adding Session to Request PipLine ____
+app.UseSession();
 
 //_____ For Identity Razar Pages _______
 app.MapRazorPages();
