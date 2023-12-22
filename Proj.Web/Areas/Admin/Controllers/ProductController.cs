@@ -243,6 +243,8 @@ namespace Proj.Web.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+
+
         private void DeleteOldImage(string Image, string wwwRootPath)
         {
             if (!string.IsNullOrEmpty(Image))
