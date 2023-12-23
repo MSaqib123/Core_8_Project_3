@@ -13,7 +13,6 @@ using System.Security.Claims;
 namespace Proj.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = SD.Role_Admin)]
     public class OrderController : Controller
     {
         private readonly IUnitOfWork iUnit;
@@ -24,11 +23,12 @@ namespace Proj.Web.Areas.Admin.Controllers
             iUnit = _iUnit;
         }
 
+        [Authorize]
         public IActionResult Index()
         {
             return View();
         }
-
+        [Authorize]
         public IActionResult Details(int orderId)
         {
             orderVM = new OrderVM();
@@ -120,8 +120,10 @@ namespace Proj.Web.Areas.Admin.Controllers
             return RedirectToAction(nameof(Details), new { orderId = orderVM.OrderHeader.Id });
         }
 
+        //___ only company pay _____
         [ActionName("Details")]
         [HttpPost]
+        [Authorize(Roles = SD.Role_Company)]
         public IActionResult Details_Pay_NOW()
         {
             orderVM.OrderHeader = iUnit.OrderHeader.Get(x => x.Id == orderVM.OrderHeader.Id, includeProperties: "ApplicationUser");
@@ -167,7 +169,6 @@ namespace Proj.Web.Areas.Admin.Controllers
             return new StatusCodeResult(303);
 
         }
-
         public IActionResult PaymentConfirmation(int orderHeaderId)
         {
             OrderHeader orderHeader = iUnit.OrderHeader.Get(u => u.Id == orderHeaderId, includeProperties: "ApplicationUser");
