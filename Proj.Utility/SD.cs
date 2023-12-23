@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,5 +27,8 @@ namespace Proj.Utility
         public static string PaymentStatusApproved = "Approved";
         public static string PaymentStatusDelayedPayment = "ApprovedForDelayedPayment";
         public static string PaymentStatusRejected = "Rejected";
+
+        //_________ Session __________
+        public static string SessionCart = "SessionShoppingCart";
     }
 }

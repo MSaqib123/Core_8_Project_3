@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Proj.DataAccess.Repository.IRepository;
 using Proj.Models;
+using Proj.Utility;
 using System.Security.Claims;
 
 namespace Proj.Web.Areas.Customer.Controllers
@@ -44,16 +45,22 @@ namespace Proj.Web.Areas.Customer.Controllers
 
                 //_____________ again adding update 
                 _iUnit.ShoppingCart.Update(cartFromDb);
+                _iUnit.SaveChange();
+
             }
             else
             {
                 _iUnit.ShoppingCart.Add(obj);
+                _iUnit.SaveChange();
+
+
+                HttpContext.Session.SetInt32(
+                    SD.SessionCart,
+                    _iUnit.ShoppingCart.GetAll(u => u.ApplicationUserId == userId).Count()
+                );
             }
-            _iUnit.SaveChange();
+            
             return RedirectToAction(nameof(Detail));
-
-
-
         }
     }
 }

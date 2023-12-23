@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Session
+@inject IHttpContextAccessor HttpContextAccessor
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -49,7 +52,19 @@
                         
                         <li class="nav-item dropdown">
                             <a class="nav-link text-dark" asp-area="Customer" asp-controller="Cart" asp-action="Index">
-                                <span class="bi bi-cart">&nbsp; (0)</span>
+                                <span class="bi bi-cart">
+                                    &nbsp;
+                                    (
+                                        @if (HttpContextAccessor.HttpContext.Session.GetInt32(SD.SessionCart) != null)
+                                        {
+                                            <b>@HttpContextAccessor.HttpContext.Session.GetInt32(SD.SessionCart)</b>
+                                        }
+                                        else
+                                        {
+                                            <b>0</b>
+                                        }
+                                    )
+                                 </span>
                             </a>
                         </li>
                     </ul>
