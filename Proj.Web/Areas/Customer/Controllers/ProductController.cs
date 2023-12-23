@@ -45,21 +45,19 @@ namespace Proj.Web.Areas.Customer.Controllers
 
                 //_____________ again adding update 
                 _iUnit.ShoppingCart.Update(cartFromDb);
-                _iUnit.SaveChange();
-
             }
             else
             {
                 _iUnit.ShoppingCart.Add(obj);
-                _iUnit.SaveChange();
-
-
-                HttpContext.Session.SetInt32(
-                    SD.SessionCart,
-                    _iUnit.ShoppingCart.GetAll(u => u.ApplicationUserId == userId).Count()
-                );
             }
-            
+            _iUnit.SaveChange();
+
+            var cartCount = _iUnit.ShoppingCart.GetAll(u => u.ApplicationUserId == userId).Count();
+            HttpContext.Session.SetInt32(
+                SD.SessionCart,
+                cartCount
+            );
+
             return RedirectToAction(nameof(Detail));
         }
     }
