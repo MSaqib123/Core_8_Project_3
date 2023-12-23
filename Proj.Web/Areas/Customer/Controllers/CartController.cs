@@ -246,6 +246,8 @@ namespace Proj.Web.Areas.Customer.Controllers
             iUnit.ShoppingCart.RemoveRange(shopingCart);
             iUnit.SaveChange();
 
+            //___ Clear Session for Cart _____
+            HttpContext.Session.SetInt32(SD.SessionCart,0);
             return View(id);
         }
         //___ Next ___
