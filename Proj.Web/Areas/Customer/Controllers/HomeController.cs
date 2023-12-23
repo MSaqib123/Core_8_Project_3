@@ -23,16 +23,16 @@ namespace Proj.Web.Areas.Customer.Controllers
 
         public IActionResult Index()
         {
-            //_______ Setting Cart SEssion on login __________
-            var claimIdentity = (ClaimsIdentity)User.Identity;
-            var claim = claimIdentity.FindFirst(ClaimTypes.NameIdentifier);
-            if (claim != null)
-            {
-                HttpContext.Session.SetInt32(
-                    SD.SessionCart,
-                    _iUnit.ShoppingCart.GetAll(x => x.ApplicationUserId == claim.Value).Count()
-                  );
-            }
+            ////_______ Setting Cart SEssion on login __________
+            //var claimIdentity = (ClaimsIdentity)User.Identity;
+            //var claim = claimIdentity.FindFirst(ClaimTypes.NameIdentifier);
+            //if (claim != null)
+            //{
+            //    HttpContext.Session.SetInt32(
+            //        SD.SessionCart,
+            //        _iUnit.ShoppingCart.GetAll(x => x.ApplicationUserId == claim.Value).Count()
+            //      );
+            //}
 
             var list = _iUnit.Product.GetAll(includeProperties: "Category").ToList();
             IndexVM vm = new IndexVM();

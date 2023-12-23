@@ -27,7 +27,8 @@ namespace Proj.Web.Areas.Identity.Pages.Account
         {
             await _signInManager.SignOutAsync();
             //________ Clearing Session on Logout ____________
-            HttpContext.Session.Clear();
+            //HttpContext.Session.Clear();  moved to  view Compenet
+
             _logger.LogInformation("User logged out.");
             if (returnUrl != null)
             {
