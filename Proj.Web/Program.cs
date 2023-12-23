@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using Proj.DataAccess.Data;
+using Proj.DataAccess.DbInitilizer;
 using Proj.DataAccess.Repository;
 using Proj.DataAccess.Repository.IRepository;
 using Proj.Utility;
@@ -25,6 +27,8 @@ builder.Services.AddSingleton<ISingleTonGuidService, SingleTonGuidService>();
 builder.Services.AddScoped<IScopedGuidService, ScopedGuidService>();
 builder.Services.AddTransient<ITransientGuidService, TransientGuidService>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
+//dbInitilizer
+builder.Services.AddTransient<IDbInitilizer, DbInitilizer>();
 
 
 //--------- 3. Registrering Repositoriers -------------- so many Repository  complex
@@ -97,6 +101,9 @@ app.UseAuthorization();
 //_____ Adding Session to Request PipLine ____
 app.UseSession();
 
+//_____ Seed DB ________
+SeedDatabase();
+
 //_____ For Identity Razar Pages _______
 app.MapRazorPages();
 
@@ -113,4 +120,15 @@ app.MapControllerRoute(
 
 app.Run();
 
+#endregion
+
+#region ------------------- Method -------------------
+void SeedDatabase()
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var dbInitilizer = scope.ServiceProvider.GetRequiredService<IDbInitilizer>();
+        dbInitilizer.Initilize();
+    }
+}
 #endregion
