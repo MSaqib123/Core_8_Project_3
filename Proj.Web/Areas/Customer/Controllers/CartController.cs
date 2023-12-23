@@ -77,6 +77,10 @@ namespace Proj.Web.Areas.Customer.Controllers
             var cartFromDb = iUnit.ShoppingCart.Get(u => u.Id == cartId);
             iUnit.ShoppingCart.Remove(cartFromDb);
             iUnit.SaveChange();
+
+            //_____ Removing cart from Session _______
+            HttpContext.Session.SetInt32(SD.SessionCart, iUnit.ShoppingCart.GetAll(u => u.ApplicationUserId == cartFromDb.ApplicationUserId).Count() - 1);
+
             return RedirectToAction("Index");
         }
 
