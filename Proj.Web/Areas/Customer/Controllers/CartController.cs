@@ -1,5 +1,4 @@
-﻿
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Proj.DataAccess.Repository.IRepository;
 using Proj.Models;
@@ -52,6 +51,9 @@ namespace Proj.Web.Areas.Customer.Controllers
             if (cartFromDb.Count <= 1)
             {
                 iUnit.ShoppingCart.Remove(cartFromDb);
+
+                //_____ Removing cart from Session _______
+                HttpContext.Session.SetInt32(SD.SessionCart, iUnit.ShoppingCart.GetAll(u => u.ApplicationUserId == cartFromDb.ApplicationUserId).Count() - 1);
             }
             else
             {
