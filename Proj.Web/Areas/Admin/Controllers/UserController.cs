@@ -57,8 +57,23 @@ namespace Proj.Web.Areas.Admin.Controllers
 
 
         [HttpDelete]
-        public IActionResult DeleteRecord(int? id)
+        public IActionResult LockUnlock([FromBody]string? id)
         {
+            var rec = db.ApplicationUsers.FirstOrDefault(x=>x.Id == id);
+            if(rec == null)
+            {
+                return Json(new { success = true, message = "Deleted Successfully" });
+            }
+
+            if (rec.LockoutEnd != null && rec.LockoutEnd > DateTime.Now)
+            {
+                rec.LockoutEnd = DateTime.Now;
+            }
+            else
+            {
+                rec.LockoutEnd = DateTime.Now.AddYears(1000);
+            }
+            db.SaveChanges();
             return Json(new { success = true, message = "Deleted Successfully" });
         }
 
