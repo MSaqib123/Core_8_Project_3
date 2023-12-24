@@ -31,8 +31,16 @@ namespace Proj.Web.Areas.Admin.Controllers
         public IActionResult GetAll()
         {
             var list = db.ApplicationUsers.Include(x=>x.Company).ToList();
+
+            var userRoles = db.UserRoles.ToList();
+            var roles = db.Roles.ToList(); 
+
+            //________ Fixing Nullable values for datatable _____
             foreach (var item in list)
             {
+                var roleId = userRoles.FirstOrDefault(x => x.UserId == item.Id).RoleId;
+                item.Role = roles.FirstOrDefault(x => x.Id == roleId).Name;
+
                 if (item.Company == null)
                 {
                     item.Company = new Company() { Name = "-" };
@@ -43,6 +51,7 @@ namespace Proj.Web.Areas.Admin.Controllers
                     item.PhoneNumber = "-";
                 }
             }
+
             return Json(new {data= list });
         }
 

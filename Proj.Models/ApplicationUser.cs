@@ -25,5 +25,8 @@ namespace Proj.Models
         [ForeignKey("CompanyId")]
         [ValidateNever]
         public virtual Company? Company { get; set; }
+
+        [NotMapped]
+        public string Role { get; set; }
     }
 }
