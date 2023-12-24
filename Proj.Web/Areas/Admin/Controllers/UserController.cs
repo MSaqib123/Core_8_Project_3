@@ -31,6 +31,18 @@ namespace Proj.Web.Areas.Admin.Controllers
         public IActionResult GetAll()
         {
             var list = db.ApplicationUsers.Include(x=>x.Company).ToList();
+            foreach (var item in list)
+            {
+                if (item.Company == null)
+                {
+                    item.Company = new Company() { Name = "-" };
+                }
+                
+                if (item.PhoneNumber == null)
+                {
+                    item.PhoneNumber = "-";
+                }
+            }
             return Json(new {data= list });
         }
 

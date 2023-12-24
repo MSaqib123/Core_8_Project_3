@@ -24,6 +24,6 @@ namespace Proj.Models
         public int? CompanyId { get; set; }
         [ForeignKey("CompanyId")]
         [ValidateNever]
-        public virtual Company Company { get; set; }
+        public virtual Company? Company { get; set; }
     }
 }
