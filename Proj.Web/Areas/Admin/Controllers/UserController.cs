@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AspNetCore;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -15,10 +17,15 @@ namespace Proj.Web.Areas.Admin.Controllers
     public class UserController: Controller
     {
         private readonly ApplicationDbContext db;
+        private readonly UserManager<IdentityUser> userManager;
 
-        public UserController(ApplicationDbContext _db)
+        public UserController(
+            ApplicationDbContext _db,
+            UserManager<IdentityUser> _userManager
+            )
         {
             db= _db;
+            userManager = _userManager;
         }
         [HttpGet]
         public IActionResult Index()
@@ -51,6 +58,40 @@ namespace Proj.Web.Areas.Admin.Controllers
             vm.applicationUser.Role = db.Roles.FirstOrDefault(x => x.Id == roleId).Name;
 
             return View(vm);
+        }
+
+
+        [HttpPost]
+        public IActionResult RoleManagement(RoleManagementVM vm)
+        {
+            //Current Role 
+            var roleId = db.UserRoles.FirstOrDefault(x => x.UserId == vm.applicationUser.Id).RoleId;
+
+            //old role
+            string oldRole = db.Roles.FirstOrDefault(u=>u.Id == roleId).Name;
+
+            if (!(vm.applicationUser.Role == oldRole))
+            {
+                //a role was updated
+                ApplicationUser applicationUser = db.ApplicationUsers.FirstOrDefault(x => x.Id == vm.applicationUser.Id);
+                if (vm.applicationUser.Role == SD.Role_Company)
+                {
+                    applicationUser.CompanyId = vm.applicationUser.CompanyId;
+                }
+                if(oldRole == SD.Role_Company)
+                {
+                    applicationUser.CompanyId = null;
+                }
+                db.SaveChanges();
+
+                //__ Removing old role __
+                userManager.RemoveFromRoleAsync(applicationUser, oldRole).GetAwaiter().GetResult();
+                //___ add new role ___
+                userManager.AddToRoleAsync(applicationUser, vm.applicationUser.Role).GetAwaiter().GetResult();
+
+            }
+
+            return RedirectToAction(nameof(Index));
         }
 
 
