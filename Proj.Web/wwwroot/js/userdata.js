@@ -20,13 +20,13 @@ function loadDataTabel() {
                     if (lockout > today) {
                         return `
                             <a onclick="LockUnlock('${data.id}','unlock_kro')" class="btn btn-sm btn-danger"><i class="bi bi-lock-fill"></i> Lock</a> | 
-                            <a href="#" class="btn btn-sm btn-primary">Permission</a>
+                            <a href="/Admin/User/RoleManagement?userId=${data.id}" class="btn btn-sm btn-primary">Permission</a>
                         `
                     }
                     else {
                         return `
                             <a onclick="LockUnlock('${data.id}','lock_kro')" class="btn btn-sm btn-success"><i class="bi bi-unlock-fill"></i> UnLock</a> | 
-                            <a class="btn btn-sm btn-primary">Permission</a>
+                            <a href="/Admin/User/RoleManagement?userId=${data.id}" class="btn btn-sm btn-primary">Permission</a>
                         `
                     }
                     

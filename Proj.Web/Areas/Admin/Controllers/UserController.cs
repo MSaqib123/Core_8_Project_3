@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Proj.DataAccess.Data;
 using Proj.DataAccess.Repository.IRepository;
 using Proj.Models;
+using Proj.Models.ViewModel;
 using Proj.Utility;
 
 namespace Proj.Web.Areas.Admin.Controllers
@@ -24,8 +25,10 @@ namespace Proj.Web.Areas.Admin.Controllers
             return View();
         }
         [HttpGet]
-        public IActionResult RoleManagement(string id)
+        public IActionResult RoleManagement(string userId)
         {
+            RoleManagementVM vm = new RoleManagementVM();
+            vm.applicationUser = db.ApplicationUsers.Where(x => x.Id == userId).FirstOrDefault();
             return View();
         }
 
