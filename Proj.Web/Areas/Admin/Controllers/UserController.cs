@@ -29,7 +29,7 @@ namespace Proj.Web.Areas.Admin.Controllers
         {
             RoleManagementVM vm = new RoleManagementVM();
             vm.applicationUser = db.ApplicationUsers.Where(x => x.Id == userId).FirstOrDefault();
-            return View();
+            return View(vm);
         }
 
 

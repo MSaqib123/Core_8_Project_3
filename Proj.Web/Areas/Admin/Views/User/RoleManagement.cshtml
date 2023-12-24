@@ -19,7 +19,7 @@
         <div class="container pt-1">
             <div class="row d-flex justify-content-center my-4">
                 <div>
-                    <a class="btn btn-sm btn-primary" asp-area="Admin" asp-controller="Order" asp-action="Index">Back to Orders</a>
+                    <a class="btn btn-sm btn-primary" asp-area="Admin" asp-controller="User" asp-action="Index">Back to User</a>
                 </div>
                 <input type="hidden" value="@Model.applicationUser.Id" asp-for="@Model.applicationUser.Id" />
                      <div class="col-md-8">
@@ -32,14 +32,32 @@
                                 <div class="col-12">
                                     <div class="row mb-3 ">
                                         <div class="col-4">
-                                            <label></label>
+                                            <label>User Name : </label>
                                         </div>
                                         <div class="col-8">
                                             <input disable class="form form-control" placeholder="Enter ShippingDate" readonly value="@Model.applicationUser.Name" />
                                         </div>
                                     </div>
+                                    <div class="row mb-3 ">
+                                        <div class="col-4">
+                                            <label>Role Name : </label>
+                                        </div>
+                                        <div class="col-8">
+                                            
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3" style="display:none">
+                                        <div class="col-4">
+                                            <label>Comapny Name : </label>
+                                        </div>
+                                        <div class="col-8">
+                                            
+                                        </div>
+                                    </div>
+
                                 </div>
-                                <button class="btn btn-warning w-100" type="submit" asp-controller="UpdateOrderDetail">Submit</button>
+                                <button class="btn btn-sm btn-primary w-100" type="submit" asp-controller="UpdateOrderDetail">Assign</button>
                             </div>
                         </div>
                     </div>
