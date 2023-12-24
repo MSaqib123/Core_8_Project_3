@@ -9,9 +9,9 @@ function loadDataTabel() {
         "columns": [
             { data: 'name', "width": "20%" },
             { data: 'email', "width": "20%" },
-            { data: 'phone', "width": "20%" },
+            { data: 'phoneNumber', "width": "20%" },
             { data: 'company.name', "width": "15%" },
-            { data: '', "width": "10%" },
+            //{ data: '', "width": "10%" },
             {
                 data: 'id',
                 "render": function (data) {
