@@ -1,0 +1,50 @@
+﻿@model OrderVM
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/fontawesome.min.css" integrity="sha512-d0olNN35C6VLiulAobxYHZiXJmq+vl+BGIgAxQtD5+kqudro/xNMvv2yIHAciGHpExsIbKX3iLg+0B6d0k4+ZA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script>
+                            .gradient - custom {
+        /* fallback for old browsers */
+        background: #6a11cb;
+
+        /* Chrome 10-25, Safari 5.1-6 */
+        background: -webkit - linear - gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
+
+        /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        background: linear - gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1))
+    }
+</script>
+
+<form method="post">
+    <section class="h-100 gradient-custom">
+        <div class="container pt-1">
+            <div class="row d-flex justify-content-center my-4">
+                <div>
+                    <a class="btn btn-sm btn-primary" asp-area="Admin" asp-controller="Order" asp-action="Index">Back to Orders</a>
+                </div>
+               <input type="hidden" value="@Model.OrderHeader.Id" asp-for="@Model.OrderHeader.Id" />
+                     <div class="col-md-8">
+                        <div class="card mb-4">
+                            <div class="card-header py-3">
+                                <h5 class="mb-0">User Roles Management</h5>
+                            </div>
+                            <div class="card-body">
+                                <!-- Single item -->
+                                <div class="col-12">
+                                    <div class="row mb-3 ">
+                                        <div class="col-4">
+                                            <label></label>
+                                        </div>
+                                        <div class="col-8">
+                                            <input disable class="form form-control" placeholder="Enter ShippingDate" readonly value="@Model.OrderHeader.ShippingDate" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-warning w-100" type="submit" asp-controller="UpdateOrderDetail">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</form>
