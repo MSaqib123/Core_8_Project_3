@@ -23,6 +23,11 @@ namespace Proj.Web.Areas.Admin.Controllers
         {
             return View();
         }
+        [HttpGet]
+        public IActionResult RoleManagement(string id)
+        {
+            return View();
+        }
 
 
         //_______________________ APis _______________________
