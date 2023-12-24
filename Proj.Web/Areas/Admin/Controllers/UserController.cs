@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Proj.DataAccess.Data;
 using Proj.DataAccess.Repository.IRepository;
@@ -28,7 +29,27 @@ namespace Proj.Web.Areas.Admin.Controllers
         public IActionResult RoleManagement(string userId)
         {
             RoleManagementVM vm = new RoleManagementVM();
-            vm.applicationUser = db.ApplicationUsers.Where(x => x.Id == userId).FirstOrDefault();
+
+            vm.applicationUser = db.ApplicationUsers.Include(x=>x.Company).Where(x => x.Id == userId).FirstOrDefault();
+
+            //Roles Projection
+            vm.RoleList = db.Roles.Select(u => new SelectListItem
+            {
+                Text = u.Name,
+                Value = u.Name
+            });
+
+            //Companies Projection
+            vm.CompanyList = db.Companies.Select(u => new SelectListItem
+            {
+                Text = u.Name,
+                Value = u.Name
+            });
+
+            //Current Role 
+            var roleId = db.UserRoles.FirstOrDefault(x => x.UserId == userId).RoleId;
+            vm.applicationUser.Role = db.Roles.FirstOrDefault(x => x.Id == roleId).Name;
+
             return View(vm);
         }
 
