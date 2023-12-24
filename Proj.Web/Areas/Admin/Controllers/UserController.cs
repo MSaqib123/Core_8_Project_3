@@ -56,7 +56,7 @@ namespace Proj.Web.Areas.Admin.Controllers
         }
 
 
-        [HttpDelete]
+        [HttpPost]
         public IActionResult LockUnlock([FromBody]string? id)
         {
             var rec = db.ApplicationUsers.FirstOrDefault(x=>x.Id == id);

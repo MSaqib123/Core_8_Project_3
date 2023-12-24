@@ -15,7 +15,7 @@ function loadDataTabel() {
             {
                 data: { id:'id',lockoutEnd : "lockoutEnd" },
                 "render": function (data) {
-                    var today = new Date().getDate();
+                    var today = new Date().getTime();
                     var lockout = new Date(data.lockoutEnd).getTime();
                     if (lockout > today) {
                         return `
@@ -62,6 +62,22 @@ function LockUnlock(id, action) {
         confirmButtonText: `Yes, ${lockStatus}`,
         allowHtml: true  // Add this option to allow HTML
     }).then((result) => {
-        // Your remaining code
+        if (result.isConfirmed) {
+            $.ajax({
+                url: '/Admin/User/LockUnlock',
+                type: 'POST',
+                data: JSON.stringify(id),
+                contentType: "application/json",
+                success: function (response) {
+                    toastr.success(response.message);
+                    dataTable.ajax.reload();
+                },
+                error: function (response) {
+                    toastr.error(response.message);
+                }
+
+            })
+
+        }
     });
 }
