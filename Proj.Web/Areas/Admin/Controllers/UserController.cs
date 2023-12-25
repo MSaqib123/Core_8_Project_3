@@ -1,11 +1,9 @@
-﻿using AspNetCore;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Proj.DataAccess.Data;
-using Proj.DataAccess.Repository.IRepository;
 using Proj.Models;
 using Proj.Models.ViewModel;
 using Proj.Utility;
@@ -27,6 +25,7 @@ namespace Proj.Web.Areas.Admin.Controllers
             db= _db;
             userManager = _userManager;
         }
+
         [HttpGet]
         public IActionResult Index()
         {
@@ -82,13 +81,13 @@ namespace Proj.Web.Areas.Admin.Controllers
                 {
                     applicationUser.CompanyId = null;
                 }
-                db.SaveChanges();
-
+                
                 //__ Removing old role __
                 userManager.RemoveFromRoleAsync(applicationUser, oldRole).GetAwaiter().GetResult();
                 //___ add new role ___
                 userManager.AddToRoleAsync(applicationUser, vm.applicationUser.Role).GetAwaiter().GetResult();
 
+                db.SaveChanges();
             }
 
             return RedirectToAction(nameof(Index));

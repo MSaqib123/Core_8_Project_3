@@ -1,15 +1,13 @@
 ﻿@model RoleManagementVM
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/fontawesome.min.css" integrity="sha512-d0olNN35C6VLiulAobxYHZiXJmq+vl+BGIgAxQtD5+kqudro/xNMvv2yIHAciGHpExsIbKX3iLg+0B6d0k4+ZA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <script>
     .gradient - custom {
-        /* fallback for old browsers */
+    
         background: #6a11cb;
 
-        /* Chrome 10-25, Safari 5.1-6 */
+    
         background: -webkit - linear - gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
 
-        /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    
         background: linear - gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1))
     }
 </script>
@@ -22,47 +20,46 @@
                     <a class="btn btn-sm btn-primary" asp-area="Admin" asp-controller="User" asp-action="Index">Back to User</a>
                 </div>
                 <input type="hidden" value="@Model.applicationUser.Id" asp-for="@Model.applicationUser.Id" />
-                     <div class="col-md-8">
-                        <div class="card mb-4">
-                            <div class="card-header py-3">
-                                <h5 class="mb-0">User Roles Management</h5>
-                            </div>
-                            <div class="card-body">
-                                <!-- Single item -->
-                                <div class="col-12">
-                                    <div class="row mb-3 ">
-                                        <div class="col-4">
-                                            <label>User Name : </label>
-                                        </div>
-                                        <div class="col-8">
-                                            <input disable class="form form-control" placeholder="Enter ShippingDate" readonly value="@Model.applicationUser.Name" />
-                                        </div>
+                <div class="col-md-8">
+                    <div class="card mb-4">
+                        <div class="card-header py-3">
+                            <h5 class="mb-0">User Roles Management</h5>
+                        </div>
+                        <div class="card-body">
+                            <!-- Single item -->
+                            <div class="col-12">
+                                <div class="row mb-3 ">
+                                    <div class="col-4">
+                                        <label>User Name : </label>
                                     </div>
-                                    <div class="row mb-3 ">
-                                        <div class="col-4">
-                                            <label>Role Name : </label>
-                                        </div>
-                                        <div class="col-8">
-                                            <select asp-for="applicationUser.Role" asp-items="@Model.RoleList" class="form-select">
-                                                <option>---- Select Role ----</option>
-                                            </select>
-                                        </div>
+                                    <div class="col-8">
+                                        <input disable class="form form-control" placeholder="Enter ShippingDate" readonly value="@Model.applicationUser.Name" />
                                     </div>
-
-                                    <div class="row mb-3" style="display:none">
-                                        <div class="col-4">
-                                            <label>Comapny Name : </label>
-                                        </div>
-                                        <div class="col-8">
-                                            <select asp-for="applicationUser.CompanyId" style="display:none" asp-items="@Model.CompanyList" class="form-select">
-                                                <option>---- Select Company ----</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
                                 </div>
-                                <button class="btn btn-sm btn-primary w-100" type="submit" asp-controller="UpdateOrderDetail">Assign</button>
+                                <div class="row mb-3 ">
+                                    <div class="col-4">
+                                        <label>Role Name : </label>
+                                    </div>
+                                    <div class="col-8">
+                                        <select asp-for="applicationUser.Role" asp-items="@Model.RoleList" class="form-select">
+                                            <option>---- Select Role ----</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3" style="display:none" id="companyContainer">
+                                    <div class="col-4">
+                                        <label>Comapny Name : </label>
+                                    </div>
+                                    <div class="col-8">
+                                        <select asp-for="applicationUser.CompanyId" style="display:none" asp-items="@Model.CompanyList" class="form-select">
+                                            <option>---- Select Company ----</option>
+                                        </select>
+                                    </div>
+                                </div>
+
                             </div>
+                            <button class="btn btn-sm btn-primary w-100" type="submit">Assign</button>
                         </div>
                     </div>
                 </div>
@@ -73,20 +70,31 @@
 
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+    
     <script>
         $(document).ready(function () {
+            //Showing if ByDefault Selected
+            if ($("#applicationUser_Role Option:Selected").text() == "Company"){
+                $("#companyContainer").show();
+                $("#applicationUser_CompanyId").show();
+            }
+
+            //Toggle
             $("#applicationUser_Role").change(function () {
                 var selection = $("#applicationUser_Role Option:Selected").text();
+                alert(selection);
                 if (selection == "Company") {
+                    $("#companyContainer").show();
                     $("#applicationUser_CompanyId").show();
                 }
                 else {
                     $("#applicationUser_CompanyId").val = 0;
+                    $("#companyContainer").hide();
                     $("#applicationUser_CompanyId").hide();
                 }
             })
         })
     </script>
 }
+
 
