@@ -43,7 +43,9 @@
                                             <label>Role Name : </label>
                                         </div>
                                         <div class="col-8">
-                                            
+                                            <select asp-for="applicationUser.Role" asp-items="@Model.RoleList" class="form-select">
+                                                <option>---- Select Role ----</option>
+                                            </select>
                                         </div>
                                     </div>
 
@@ -52,7 +54,9 @@
                                             <label>Comapny Name : </label>
                                         </div>
                                         <div class="col-8">
-                                            
+                                            <select asp-for="applicationUser.CompanyId" style="display:none" asp-items="@Model.CompanyList" class="form-select">
+                                                <option>---- Select Company ----</option>
+                                            </select>
                                         </div>
                                     </div>
 
@@ -66,3 +70,23 @@
         </div>
     </section>
 </form>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(document).ready(function () {
+            $("#applicationUser_Role").change(function () {
+                var selection = $("#applicationUser_Role Option:Selected").text();
+                if (selection == "Company") {
+                    $("#applicationUser_CompanyId").show();
+                }
+                else {
+                    $("#applicationUser_CompanyId").val = 0;
+                    $("#applicationUser_CompanyId").hide();
+                }
+            })
+        })
+    </script>
+}
+

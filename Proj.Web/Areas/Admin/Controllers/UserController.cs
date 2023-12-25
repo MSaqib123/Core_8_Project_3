@@ -50,8 +50,8 @@ namespace Proj.Web.Areas.Admin.Controllers
             vm.CompanyList = db.Companies.Select(u => new SelectListItem
             {
                 Text = u.Name,
-                Value = u.Name
-            });
+                Value = u.Id.ToString()
+            }) ;
 
             //Current Role 
             var roleId = db.UserRoles.FirstOrDefault(x => x.UserId == userId).RoleId;
