@@ -139,7 +139,6 @@ namespace Proj.Web.Areas.Identity.Pages.Account
         {
             //__________ Adding Role If Not Exist ______
             //has been moved to dataInitilizer
-
             Input = new()
             {
                 //__________ RoleList ___________
@@ -210,8 +209,16 @@ namespace Proj.Web.Areas.Identity.Pages.Account
                     }
                     else
                     {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
+                        if (User.IsInRole("Admin") || User.IsInRole("Employee"))
+                        {
+                            TempData["success"] = "New User Create Successfully";
+                        }
+                        else
+                        {
+                            await _signInManager.SignInAsync(user, isPersistent: false);
+                        }
+                         return LocalRedirect(returnUrl);
+                        
                     }
                 }
                 foreach (var error in result.Errors)
