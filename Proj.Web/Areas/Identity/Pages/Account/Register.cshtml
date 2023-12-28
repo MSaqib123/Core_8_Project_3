@@ -14,7 +14,7 @@
                 <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
                     @if (User.IsInRole("Admin") || User.IsInRole("Employee"))
                     {
-                        <h1>@ViewData["Title"] - ADMIN PORTAL</h1>
+                        <h1 class="text-center">@ViewData["Title"] - ADMIN PORTAL</h1>
                     }
                     else{
                         <h1>@ViewData["Title"]</h1>
@@ -24,7 +24,7 @@
                         <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
 
                         <!-- Name input -->
-                        <div class="col-6 mb-4 mt-3">
+                        <div class="col-6 mb-3 mt-3">
                             <div class="form-outline ">
                                 <input asp-for="Input.Name" type="text" class="form-control form-control-lg" aria-required="true"
                                        placeholder="Enter a Name" />
@@ -33,7 +33,7 @@
                         </div>
 
                         <!-- Email input -->
-                        <div class="col-6 mb-4 mt-3">
+                        <div class="col-6 mb-3 mt-3">
                             <div class="form-outline ">
                                 <input asp-for="Input.Email" type="email" id="form3Example3" class="form-control form-control-lg" aria-required="true"
                                        placeholder="Enter a valid email address" />
@@ -44,7 +44,7 @@
 
 
                         <!-- Password input -->
-                        <div class="col-6 mb-4">
+                        <div class="col-6 mb-3">
                             <div class="form-outline mb-3">
                                 <input asp-for="Input.Password" type="password" id="form3Example4" class="form-control form-control-lg" aria-required="true"
                                        placeholder="Enter password" />
@@ -54,7 +54,7 @@
 
 
                         <!-- Password input -->
-                        <div class="col-6 mb-4">
+                        <div class="col-6 mb-3">
                             <div class="form-outline mb-3">
                                 <input asp-for="Input.ConfirmPassword" type="password" id="form3Example4" class="form-control form-control-lg" aria-required="true"
                                        placeholder="Enter ConfirmPassword" />
@@ -76,8 +76,8 @@
                                 </select>       
                             </div>
                         }
-                        <div class="col-6">
-                            <div class="text-center text-lg-start mt-4 pt-2">
+                        <div class="col-6  class=" text-center"">
+                            <div class="text-center text-lg-start">
                                 <button class="btn btn-primary btn-lg"
                                         style="padding-left: 2.5rem; padding-right: 2.5rem;" type="submit">
                                     Register
