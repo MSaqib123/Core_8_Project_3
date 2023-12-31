@@ -366,7 +366,7 @@ namespace Proj.Web.Areas.Admin.Controllers
             var imagesToBeDeleted = _iUnit.ProductImage.GetAll(x => x.ProductId == id);
             if (imagesToBeDeleted != null)
             {
-                string productPath = @"Image\Products\Product-"+id;
+                string productPath = @"Images\Products\Product-"+id;
                 string finalPath = Path.Combine(_iWeb.WebRootPath , productPath);
                 if (Directory.Exists(finalPath))
                 {
