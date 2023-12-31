@@ -318,8 +318,21 @@ namespace Proj.Web.Areas.Admin.Controllers
         //________________ Delete Image _______________
         public IActionResult DeleteImage(int ImageId)
         {
-            var imageToBeDeleted = _iUnit.ProductImage.Get(x=>x==ImageId);
+            var imageToBeDeleted = _iUnit.ProductImage.Get(x=>x.Id==ImageId);
+            if (imageToBeDeleted != null)
+            {
+                var productID = imageToBeDeleted.ProductId;
+                if (!string.IsNullOrEmpty(imageToBeDeleted.ImageURL))
+                {
+                    var oldImagePath = Path.Combine(_iWeb.WebRootPath , imageToBeDeleted.ImageURL.TrimStart("\\"));
+                    if (System.IO.File.Exists(oldImagePath))
+                    { System.IO.File.Delete(oldImagePath); }
+                }
+                _iUnit.ProductImage.Remove(imageToBeDeleted);
+                _iUnit.SaveChange();
 
+            }
+            return RedirectToAction(nameof(Upsert) , new {id = ImageId});
         }
 
 
