@@ -192,7 +192,6 @@ namespace Proj.Web.Areas.Admin.Controllers
                 //}
                 #endregion
 
-
                 //__ Insert , Update __
                 if (vm.Product_obj.Id > 0)
                 {
@@ -214,7 +213,6 @@ namespace Proj.Web.Areas.Admin.Controllers
                 }
                 _iUnit.SaveChange();
 
-
                 //______________ 2. Multiple Image Upload Code _____________
                 #region Mutliple_ImageUpdated Code
                 string wwwrootpath = _iWeb.WebRootPath;
@@ -222,7 +220,7 @@ namespace Proj.Web.Areas.Admin.Controllers
                 {
                     foreach (IFormFile file in files)
                     {
-                        string filename = guid.newguid().tostring() + path.getextension(file.filename);
+                        string filename = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
                         string productPath = @"Images\Products\Product-"+vm.Product_obj.Id;
                         string finalPath = Path.Combine(wwwrootpath, productPath);
 
@@ -247,20 +245,18 @@ namespace Proj.Web.Areas.Admin.Controllers
 
                         //____ Directly  Add to db ___
                         //bad Logic
-                        _iUnit.ProductImage.Add(productImage);
+                        //_iUnit.ProductImage.Add(productImage);
+                        //_iUnit.SaveChange();
 
-                        _iUnit.SaveChange();
+                        //____ Add to vm 1st ___
+                        vm.Product_obj.ProductImages.Add(productImage);
                     }
 
-                    ////__________ delete old image _________
-                    //deleteoldimage(vm.product_obj.imageurl, wwwrootpath);
+                    //__ Update the Complete Product ___
+                    //for this we have to   add 1 line of code in   Update Method of product
+                    _iUnit.Product.Update(vm.Product_obj);
+                    _iUnit.SaveChange();
 
-                    ////__________ saveing new image _________
-                    //using (var filestream = new filestream(path.combine(productpath, filename), filemode.create))
-                    //{
-                    //    file.copyto(filestream);
-                    //}
-                    //vm.product_obj.imageurl = @"\images\products\" + filename;
                 }
                 #endregion
 

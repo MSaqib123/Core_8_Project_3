@@ -31,10 +31,14 @@ namespace Proj.DataAccess.Repository
                 objFromDb.Price = obj.Price;
                 objFromDb.Price50 = obj.Price50;
                 objFromDb.Price100 = obj.Price100;
+                //_____ Removing Single Image _____
                 //if (obj.ImageUrl != null)
                 //{
                 //    objFromDb.ImageUrl = obj.ImageUrl;
                 //}
+                //_____ Multiple images _____
+                //the power of Entity  very smart
+                objFromDb.ProductImages = obj.ProductImages;
             }
             _db.Products.Update(objFromDb);
         }
