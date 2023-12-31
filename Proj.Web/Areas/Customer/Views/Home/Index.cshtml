@@ -8,10 +8,15 @@
     {
         <div class="col-3">
             <div class="card h-100">
-                @foreach (var image in item.ProductImages.Take(1))
+                @if (item.ProductImages != null && item.ProductImages.Count() > 0)
                 {
-                    <img src="@image.ImageURL" class="card-img-top" alt="...">
+                    <img src="@item.ProductImages.FirstOrDefault().ImageURL" class="card-img-top" alt="...">
                 }
+                else
+                {
+                    <img src="https://placehold.co/500x600/png" class="card-img-top" alt="...">
+                }
+                
                 <div class="card-body text-center">
                     <h5 class="card-title">@item.Title</h5>
                     <p class="card-text">@item.Category.Name</p>

@@ -386,7 +386,6 @@ namespace Proj.Web.Areas.Admin.Controllers
 
             return Json(new { success = true, message = "Deleted Successfully" });
         }
-
         #endregion
     }
 }
