@@ -52,7 +52,6 @@
                             </div>
                         </div>
 
-
                         <!-- Password input -->
                         <div class="col-6 mb-3">
                             <div class="form-outline mb-3">
@@ -61,6 +60,44 @@
                                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                             </div>
                         </div>
+
+                        <!-- Address input -->
+                        <div class="col-6 mb-3 mt-3">
+                            <div class="form-outline ">
+                                <input asp-for="Input.Address" id="form3Example3" class="form-control form-control-lg" aria-required="true"
+                                       placeholder="Enter a address" />
+                                <span asp-validation-for="Input.Address" class="text-danger"></span>
+                            </div>
+                        </div>
+                        
+                        <!-- City input -->
+                        <div class="col-6 mb-3 mt-3">
+                            <div class="form-outline ">
+                                <input asp-for="Input.City" id="form3Example3" class="form-control form-control-lg" aria-required="true"
+                                       placeholder="Enter a City" />
+                                <span asp-validation-for="Input.City" class="text-danger"></span>
+                            </div>
+                        </div>
+                        
+                        <!-- City input -->
+                        <div class="col-6 mb-3 mt-3">
+                            <div class="form-outline ">
+                                <input asp-for="Input.State" id="form3Example3" class="form-control form-control-lg" aria-required="true"
+                                       placeholder="Enter a State" />
+                                <span asp-validation-for="Input.State" class="text-danger"></span>
+                            </div>
+                        </div>
+                        
+                        <!-- PostalCode input -->
+                        <div class="col-6 mb-3 mt-3">
+                            <div class="form-outline ">
+                                <input asp-for="Input.State" id="form3Example3" class="form-control form-control-lg" aria-required="true"
+                                       placeholder="Enter a PostalCode" />
+                                <span asp-validation-for="Input.PostalCode" class="text-danger"></span>
+                            </div>
+                        </div>
+
+
 
                         @if (User.IsInRole("Admin") || User.IsInRole("Employee"))
                         {
