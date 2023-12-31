@@ -314,6 +314,7 @@ namespace Proj.Web.Areas.Admin.Controllers
         #endregion
 
         //________________ Delete Image _______________
+        #region DeleteImage
         public IActionResult DeleteImage(int ImageId)
         {
             var imageToBeDeleted = _iUnit.ProductImage.Get(x=>x.Id==ImageId);
@@ -332,9 +333,10 @@ namespace Proj.Web.Areas.Admin.Controllers
             }
             return RedirectToAction(nameof(Upsert) , new {id = productID });
         }
+        #endregion
 
 
-        //_______________________ APis _______________________
+        //_______________________ APIs _______________________
         #region Apis work
         [HttpGet]
         public IActionResult GetAll()
@@ -356,9 +358,28 @@ namespace Proj.Web.Areas.Admin.Controllers
             {
                 return Json(new {success=false,message="Error while deleting"});
             }
-            //__________ Delete Old Image _________
-            string wwwRootPath = _iWeb.WebRootPath;
+            //__________ Delete 1 Image _________
+            //string wwwRootPath = _iWeb.WebRootPath;
             //DeleteOldImage(obj.ImageUrl, wwwRootPath);
+
+            //__________ Delete All Images & Directory _________
+            var imagesToBeDeleted = _iUnit.ProductImage.GetAll(x => x.ProductId == id);
+            if (imagesToBeDeleted != null)
+            {
+                string productPath = @"Image\Products\Product-"+id;
+                string finalPath = Path.Combine(_iWeb.WebRootPath , productPath);
+                if (Directory.Exists(finalPath))
+                {
+                    string[] filePaths = Directory.GetFiles(finalPath);
+                    foreach (var filePath in filePaths)
+                    {
+                         System.IO.File.Delete(filePath); 
+                    }
+                    //after deleting all file 
+                    Directory.Delete(finalPath);
+                }
+                
+            }
 
             _iUnit.Product.Remove(obj);
             _iUnit.SaveChange();
