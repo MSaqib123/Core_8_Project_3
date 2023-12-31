@@ -34,7 +34,7 @@ namespace Proj.Web.Areas.Customer.Controllers
             //      );
             //}
 
-            var list = _iUnit.Product.GetAll(includeProperties: "Category").ToList();
+            var list = _iUnit.Product.GetAll(includeProperties: "Category,ProductImages").ToList();
             IndexVM vm = new IndexVM();
             vm.ProductList = list;
             return View(vm);
