@@ -114,6 +114,7 @@ namespace Proj.Web.Areas.Identity.Pages.Account
             public string City { get; set; }
 
             [Required]
+            [RegularExpression(@"^\d{4}-\d{7}$", ErrorMessage = "Please enter a valid phone number in the format xxxx-xxxxxxx.")]
             [Display(Name = "PhoneNumber")]
             public string PhoneNumber { get; set; }
 
