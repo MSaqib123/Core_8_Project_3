@@ -113,6 +113,10 @@ namespace Proj.Web.Areas.Identity.Pages.Account
             [Display(Name = "City")]
             public string City { get; set; }
 
+            [Required]
+            [Display(Name = "PhoneNumber")]
+            public string PhoneNumber { get; set; }
+
 
 
             /// <summary>
@@ -196,6 +200,7 @@ namespace Proj.Web.Areas.Identity.Pages.Account
                 user.PostalCode = Input.PostalCode;
                 user.State = Input.State;
                 user.City = Input.City;
+                user.PhoneNumber = Input.PhoneNumber;
                 if (Input.Role == SD.Role_Company)
                 {
                     user.CompanyId = Input.CompanyId;
