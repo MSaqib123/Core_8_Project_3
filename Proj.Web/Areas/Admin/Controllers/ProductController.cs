@@ -154,11 +154,11 @@ namespace Proj.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Upsert(ProductVM vm, IFormFile? file)
+        public IActionResult Upsert(ProductVM vm, IFormFile? files)
         {
             if (ModelState.IsValid)
             {
-                string wwwRootPath = _iWeb.WebRootPath;
+                //string wwwRootPath = _iWeb.WebRootPath;
                 //if (file != null)
                 //{
                 //    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
