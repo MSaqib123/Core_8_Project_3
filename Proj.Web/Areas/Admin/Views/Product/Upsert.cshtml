@@ -85,7 +85,12 @@
             </div>
         </div>
         <div class="col-3">
-            @*<img class="img-fluid" src="@Model.Product_obj.ImageUrl"/>*@
+            @if(Model.Product_obj.ProductImages != null){
+                foreach (var item in Model.Product_obj.ProductImages)
+                {
+                    <img class="img-fluid mb-4" src="~@item.ImageURL"/>
+                }
+            }
         </div>
 
 

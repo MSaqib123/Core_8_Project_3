@@ -139,7 +139,7 @@ namespace Proj.Web.Areas.Admin.Controllers
 
             if (id> 0)
             {
-                obj = _iUnit.Product.Get(x => x.Id == id);
+                obj = _iUnit.Product.Get(x => x.Id == id , includeProperties : "ProductImages");
                 if (obj == null)
                 {
                     return NotFound();
