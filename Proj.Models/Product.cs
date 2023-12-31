@@ -49,10 +49,12 @@ namespace Proj.Models
         public Category Category { get; set; }
 
 
-        [ValidateNever]
-        [Display(Name = "Product Image")]
-        public string ImageUrl { get; set; }
+        //_______ Removing Image _________
+        //[ValidateNever]
+        //[Display(Name = "Product Image")]
+        //public string ImageUrl { get; set; }
 
+        //_______ Adding Multiple Images _________
 
     }
 }

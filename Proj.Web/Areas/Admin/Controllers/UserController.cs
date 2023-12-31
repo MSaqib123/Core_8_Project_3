@@ -87,7 +87,7 @@ namespace Proj.Web.Areas.Admin.Controllers
                 //___ add new role ___
                 userManager.AddToRoleAsync(applicationUser, vm.applicationUser.Role).GetAwaiter().GetResult();
 
-                db.SaveChanges();
+                db.SaveChanges(); 
             }
 
             return RedirectToAction(nameof(Index));
