@@ -82,6 +82,11 @@
                     <input type="file" class="form-control" name="files" multiple>
                 </div>
 
+                <div class="col-12 my-4">
+                    <button type="submit" class="btn btn-primary">
+                        @(Model.Product_obj.Id > 0 ? "Update" : "Add") Product
+                    </button>
+                </div>
             </div>
         </div>
         <div class="col-3">
@@ -99,11 +104,6 @@
         </div>
 
 
-        <div class="col-6 my-4">
-            <button type="submit" class="btn btn-primary">
-                @(Model.Product_obj.Id > 0 ? "Update" : "Add") Product
-            </button>
-        </div>
     </div>
 </form>
 
