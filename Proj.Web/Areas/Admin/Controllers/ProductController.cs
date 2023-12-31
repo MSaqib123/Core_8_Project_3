@@ -11,6 +11,7 @@ using Proj.Utility;
 using System;
 using System.Data;
 using System.IO;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace Proj.Web.Areas.Admin.Controllers
 {
@@ -299,7 +300,8 @@ namespace Proj.Web.Areas.Admin.Controllers
         }
 
 
-
+        //________________ Delete Old Image _______________
+        #region DeleteOldImage
         private void DeleteOldImage(string Image, string wwwRootPath)
         {
             if (!string.IsNullOrEmpty(Image))
@@ -310,6 +312,14 @@ namespace Proj.Web.Areas.Admin.Controllers
                     System.IO.File.Delete(oldImagePath);
                 }
             }
+        }
+        #endregion
+
+        //________________ Delete Image _______________
+        public IActionResult DeleteImage(int ImageId)
+        {
+            var imageToBeDeleted = _iUnit.ProductImage.Get(x=>x==ImageId);
+
         }
 
 
