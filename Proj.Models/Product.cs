@@ -55,6 +55,8 @@ namespace Proj.Models
         //public string ImageUrl { get; set; }
 
         //_______ Adding Multiple Images _________
-
+        // 1 to many    1product has manyImages
+        [ValidateNever]
+        public List<ProductImage> ProductImages{ get; set; }
     }
 }
