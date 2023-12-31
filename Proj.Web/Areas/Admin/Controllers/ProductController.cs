@@ -227,7 +227,7 @@ namespace Proj.Web.Areas.Admin.Controllers
                         if (!Directory.Exists(finalPath))
                             Directory.CreateDirectory(finalPath);
 
-                        using (var filestream = new FileStream(Path.Combine(finalPath, productPath), FileMode.Create))
+                        using (var filestream = new FileStream(Path.Combine(finalPath, filename), FileMode.Create))
                         {
                             file.CopyTo(filestream);
                         }
