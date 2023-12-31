@@ -97,6 +97,14 @@
                             </div>
                         </div>
 
+                        <!-- PhoneNumber input -->
+                        <div class="col-6 mb-3">
+                            <div class="form-outline ">
+                                <input asp-for="Input.PhoneNumber" id="form3Example3" class="form-control form-control-lg" aria-required="true"
+                                       placeholder="Enter a PhoneNumber" />
+                                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+                            </div>
+                        </div>
 
 
                         @if (User.IsInRole("Admin") || User.IsInRole("Employee"))
