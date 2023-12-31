@@ -8,7 +8,9 @@ using Proj.DataAccess.Repository.IRepository;
 using Proj.Models;
 using Proj.Models.ViewModel;
 using Proj.Utility;
+using System;
 using System.Data;
+using System.IO;
 
 namespace Proj.Web.Areas.Admin.Controllers
 {
@@ -154,10 +156,12 @@ namespace Proj.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Upsert(ProductVM vm, IFormFile? files)
+        public IActionResult Upsert(ProductVM vm, List<IFormFile>? files)
         {
             if (ModelState.IsValid)
             {
+                //______________ 1. Old Single Image Upload Code _____________
+                #region SingleImageUPdate
                 //string wwwRootPath = _iWeb.WebRootPath;
                 //if (file != null)
                 //{
@@ -186,7 +190,10 @@ namespace Proj.Web.Areas.Admin.Controllers
                 //    }
                 //    vm.Product_obj.ImageUrl = @"\Images\Products\" + fileName;
                 //}
+                #endregion
 
+
+                //__ Insert , Update __
                 if (vm.Product_obj.Id > 0)
                 {
                     //if (vm.Product_obj.ImageUrl == null && file == null)
@@ -205,8 +212,59 @@ namespace Proj.Web.Areas.Admin.Controllers
                     _iUnit.Product.Add(vm.Product_obj);
                     TempData["Success"] = "Inserted Successfuly";
                 }
-
                 _iUnit.SaveChange();
+
+
+                //______________ 2. Multiple Image Upload Code _____________
+                #region Mutliple_ImageUpdated Code
+                string wwwrootpath = _iWeb.WebRootPath;
+                if (files != null)
+                {
+                    foreach (IFormFile file in files)
+                    {
+                        string filename = guid.newguid().tostring() + path.getextension(file.filename);
+                        string productPath = @"Images\Products\Product-"+vm.Product_obj.Id;
+                        string finalPath = Path.Combine(wwwrootpath, productPath);
+
+                        if (!Directory.Exists(finalPath))
+                            Directory.CreateDirectory(finalPath);
+
+                        using (var filestream = new FileStream(Path.Combine(finalPath, productPath), FileMode.Create))
+                        {
+                            file.CopyTo(filestream);
+                        }
+
+                        //initialize Obj
+                        ProductImage productImage = new()
+                        {
+                            ImageURL = @"\" + productPath + @"\" + filename,
+                            ProductId = vm.Product_obj.Id
+                        };
+
+                        //___ validate Empty image ___
+                        if (vm.Product_obj.ProductImages == null)
+                            vm.Product_obj.ProductImages = new List<ProductImage>();
+
+                        //____ Directly  Add to db ___
+                        //bad Logic
+                        _iUnit.ProductImage.Add(productImage);
+
+                        _iUnit.SaveChange();
+                    }
+
+                    ////__________ delete old image _________
+                    //deleteoldimage(vm.product_obj.imageurl, wwwrootpath);
+
+                    ////__________ saveing new image _________
+                    //using (var filestream = new filestream(path.combine(productpath, filename), filemode.create))
+                    //{
+                    //    file.copyto(filestream);
+                    //}
+                    //vm.product_obj.imageurl = @"\images\products\" + filename;
+                }
+                #endregion
+
+
                 return RedirectToAction("Index");
             }
             else
