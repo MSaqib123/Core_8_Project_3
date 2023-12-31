@@ -88,7 +88,10 @@
             @if(Model.Product_obj.ProductImages != null){
                 foreach (var item in Model.Product_obj.ProductImages)
                 {
-                    <img class="img-fluid mb-4" src="~@item.ImageURL"/>
+                    <img class="img-fluid mb-4" src="@item.ImageURL"/>
+                    <a asp-action="DeleteImage" class="btn btn-sm btn-danger" asp-route-ImageId="@item.Id">
+                        <i class="bi bi-trash-fill"></i> Delete
+                    </a>
                 }
             }
         </div>
