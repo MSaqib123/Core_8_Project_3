@@ -31,9 +31,11 @@ namespace Proj.Web.Areas.Customer.Controllers
 
             vm.OrderHeader = new();
 
+            IEnumerable<ProductImage> productImages = iUnit.ProductImage.GetAll();
             //___ Total price base on Quantity ___
             foreach (var cart in vm.ShoppingCartList)
             {
+                cart.Product.ProductImages = productImages.Where(u => u.ProductId == cart.Product.Id).ToList();
                 double price = GetPriceBaseOnQuantity(cart);
                 cart.Price = price;
                 vm.OrderHeader.OrderTotal += (price * cart.Count);

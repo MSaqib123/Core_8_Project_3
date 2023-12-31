@@ -278,6 +278,7 @@ namespace Proj.Web.Areas.Admin.Controllers
 
         #endregion
 
+
         [HttpGet]
         public IActionResult Delete(int? id)
         {
