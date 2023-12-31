@@ -8,6 +8,10 @@
     {
         <div class="col-3">
             <div class="card h-100">
+                @foreach (var image in item.ProductImages.Take(1))
+                {
+                    <img src="@image.ImageURL" class="card-img-top" alt="...">
+                }
                 <div class="card-body text-center">
                     <h5 class="card-title">@item.Title</h5>
                     <p class="card-text">@item.Category.Name</p>
