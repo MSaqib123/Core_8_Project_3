@@ -234,8 +234,8 @@ namespace Proj.Web.Areas.Admin.Controllers
             Product? obj = _iUnit.Product.Get(x => x.Id == id);
 
             //__________ Delete Old Image _________
-            string wwwRootPath = _iWeb.WebRootPath;
-            DeleteOldImage(obj.ImageUrl, wwwRootPath);
+            //string wwwRootPath = _iWeb.WebRootPath;
+            //DeleteOldImage(obj.ImageUrl, wwwRootPath);
 
             _iUnit.Product.Remove(obj);
             _iUnit.SaveChange();
@@ -282,7 +282,7 @@ namespace Proj.Web.Areas.Admin.Controllers
             }
             //__________ Delete Old Image _________
             string wwwRootPath = _iWeb.WebRootPath;
-            DeleteOldImage(obj.ImageUrl, wwwRootPath);
+            //DeleteOldImage(obj.ImageUrl, wwwRootPath);
 
             _iUnit.Product.Remove(obj);
             _iUnit.SaveChange();
