@@ -186,25 +186,26 @@ namespace Proj.Web.Areas.Admin.Controllers
                 //    }
                 //    vm.Product_obj.ImageUrl = @"\Images\Products\" + fileName;
                 //}
-                
-                //if (vm.Product_obj.Id > 0 )
-                //{
-                //    if (vm.Product_obj.ImageUrl == null && file == null)
-                //    {
-                //        vm.Product_obj.ImageUrl = "\\Images\\NoImage.jpg";
-                //    }
-                //    _iUnit.Product.Update(vm.Product_obj);
-                //    TempData["Success"] = "Updated Successfuly";
-                //}
-                //else
-                //{
-                //    if (vm.Product_obj.ImageUrl == null)
-                //    {
-                //        vm.Product_obj.ImageUrl = "\\Images\\NoImage.jpg";
-                //    }
-                //    _iUnit.Product.Add(vm.Product_obj);
-                //    TempData["Success"] = "Inserted Successfuly";
-                //}
+
+                if (vm.Product_obj.Id > 0)
+                {
+                    //if (vm.Product_obj.ImageUrl == null && file == null)
+                    //{
+                    //    vm.Product_obj.ImageUrl = "\\Images\\NoImage.jpg";
+                    //}
+                    _iUnit.Product.Update(vm.Product_obj);
+                    TempData["Success"] = "Updated Successfuly";
+                }
+                else
+                {
+                    //if (vm.Product_obj.ImageUrl == null)
+                    //{
+                    //    vm.Product_obj.ImageUrl = "\\Images\\NoImage.jpg";
+                    //}
+                    _iUnit.Product.Add(vm.Product_obj);
+                    TempData["Success"] = "Inserted Successfuly";
+                }
+
                 _iUnit.SaveChange();
                 return RedirectToAction("Index");
             }
