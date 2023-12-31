@@ -98,22 +98,18 @@ namespace Proj.Web.Areas.Identity.Pages.Account
             public string Email { get; set; }
 
             [Required]
-            [EmailAddress]
             [Display(Name = "Address")]
             public string Address { get; set; }
             
             [Required]
-            [EmailAddress]
             [Display(Name = "City")]
             public string State { get; set; }
 
             [Required]
-            [EmailAddress]
             [Display(Name = "PostalCode")]
             public string PostalCode { get; set; }
 
             [Required]
-            [EmailAddress]
             [Display(Name = "City")]
             public string City { get; set; }
 
@@ -187,14 +183,18 @@ namespace Proj.Web.Areas.Identity.Pages.Account
         {
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-            
-            //if (ModelState.IsValid)
-            //{
+
+            if (ModelState.IsValid)
+            {
                 var user = CreateUser();
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 user.Name = Input.Name;
+                user.Email = Input.Email;
+                user.StreetAddress = Input.Address;
+                user.PostalCode = Input.PostalCode;
+                user.State = Input.State;
                 if (Input.Role == SD.Role_Company)
                 {
                     user.CompanyId = Input.CompanyId;
@@ -249,24 +249,24 @@ namespace Proj.Web.Areas.Identity.Pages.Account
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
-            //}
+            }
 
-            //Input = new()
-            //{
-            //    //__________ RoleList ___________
-            //    RoleList = _roleManager.Roles.Select(x => x.Name).Select(i => new SelectListItem
-            //    {
-            //        Text = i,
-            //        Value = i
-            //    }),
-            //    //__________ RoleList ___________
-            //    CompanyList = _iUnit.Company.GetAll().Select(i => new SelectListItem
-            //    {
-            //        Text = i.Name,
-            //        Value = i.Id.ToString()
-            //    }),
-            //};
-            // If we got this far, something failed, redisplay form
+            Input = new()
+            {
+                //__________ RoleList ___________
+                RoleList = _roleManager.Roles.Select(x => x.Name).Select(i => new SelectListItem
+                {
+                    Text = i,
+                    Value = i
+                }),
+                //__________ RoleList ___________
+                CompanyList = _iUnit.Company.GetAll().Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                }),
+            };
+            //If we got this far, something failed, redisplay form
             return Page();
         }
 
