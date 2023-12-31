@@ -10,8 +10,6 @@ using Proj.Models.ViewModel;
 using Proj.Utility;
 using System;
 using System.Data;
-using System.IO;
-using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace Proj.Web.Areas.Admin.Controllers
 {
@@ -319,12 +317,12 @@ namespace Proj.Web.Areas.Admin.Controllers
         public IActionResult DeleteImage(int ImageId)
         {
             var imageToBeDeleted = _iUnit.ProductImage.Get(x=>x.Id==ImageId);
+            var productID = imageToBeDeleted.ProductId;
             if (imageToBeDeleted != null)
             {
-                var productID = imageToBeDeleted.ProductId;
                 if (!string.IsNullOrEmpty(imageToBeDeleted.ImageURL))
                 {
-                    var oldImagePath = Path.Combine(_iWeb.WebRootPath , imageToBeDeleted.ImageURL.TrimStart("\\"));
+                    var oldImagePath = Path.Combine(_iWeb.WebRootPath , imageToBeDeleted.ImageURL.TrimStart('\\'));
                     if (System.IO.File.Exists(oldImagePath))
                     { System.IO.File.Delete(oldImagePath); }
                 }
@@ -332,7 +330,7 @@ namespace Proj.Web.Areas.Admin.Controllers
                 _iUnit.SaveChange();
 
             }
-            return RedirectToAction(nameof(Upsert) , new {id = ImageId});
+            return RedirectToAction(nameof(Upsert) , new {id = productID });
         }
 
 
