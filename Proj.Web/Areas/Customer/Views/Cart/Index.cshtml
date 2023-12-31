@@ -36,6 +36,14 @@
                                     <div class="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
                                             @*<img src="@item.Product.ImageUrl"
                                              class="w-100" alt="@item.Product.Title" />*@
+                                            @if (item.Product.ProductImages != null && item.Product.ProductImages.Count() > 0)
+                                            {
+                                                <img src="@item.Product.ProductImages.FirstOrDefault().ImageURL" class="card-img-top" alt="...">
+                                            }
+                                            else
+                                            {
+                                                <img src="https://placehold.co/500x600/png" class="card-img-top" alt="...">
+                                            }
                                         <a href="#!">
                                             <div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
                                         </a>
