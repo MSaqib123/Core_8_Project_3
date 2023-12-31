@@ -195,6 +195,7 @@ namespace Proj.Web.Areas.Identity.Pages.Account
                 user.StreetAddress = Input.Address;
                 user.PostalCode = Input.PostalCode;
                 user.State = Input.State;
+                user.City = Input.City;
                 if (Input.Role == SD.Role_Company)
                 {
                     user.CompanyId = Input.CompanyId;
