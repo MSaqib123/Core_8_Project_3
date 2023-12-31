@@ -59,7 +59,6 @@ namespace Proj.Web.Areas.Admin.Controllers
             return View(vm);
         }
 
-
         [HttpPost]
         public IActionResult RoleManagement(RoleManagementVM vm)
         {
@@ -69,6 +68,7 @@ namespace Proj.Web.Areas.Admin.Controllers
             //old role
             string oldRole = db.Roles.FirstOrDefault(u=>u.Id == roleId).Name;
 
+            //Admin can not Change Company Directly ---> he has to change   Role 1st
             if (!(vm.applicationUser.Role == oldRole))
             {
                 //a role was updated
