@@ -61,10 +61,10 @@ namespace Proj.Web.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (vm.Product_obj.ImageUrl == null)
-                {
-                    vm.Product_obj.ImageUrl = "";
-                }
+                //if (vm.Product_obj.ImageUrl == null)
+                //{
+                //    vm.Product_obj.ImageUrl = "";
+                //}
                 _iUnit.Product.Add(vm.Product_obj);
                 _iUnit.SaveChange();
                 TempData["Success"] = "Inserted Successfuly";
@@ -106,10 +106,10 @@ namespace Proj.Web.Areas.Admin.Controllers
             {
                 if (vm.Product_obj.Id > 0)
                 {
-                    if (vm.Product_obj.ImageUrl == null)
-                    {
-                        vm.Product_obj.ImageUrl = "";
-                    }
+                    //if (vm.Product_obj.ImageUrl == null)
+                    //{
+                    //    vm.Product_obj.ImageUrl = "";
+                    //}
                     _iUnit.Product.Update(vm.Product_obj);
                     _iUnit.SaveChange();
                     TempData["Success"] = "Updated Successfuly";
@@ -159,52 +159,52 @@ namespace Proj.Web.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 string wwwRootPath = _iWeb.WebRootPath;
-                if (file != null)
-                {
-                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                    string productPath = Path.Combine(wwwRootPath,@"Images\Products");
+                //if (file != null)
+                //{
+                //    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                //    string productPath = Path.Combine(wwwRootPath,@"Images\Products");
 
-                    #region badWay
-                    //if (vm.Product_obj.ImageUrl != null)
-                    //if (!string.IsNullOrEmpty(vm.Product_obj.ImageUrl))
-                    //{
-                    //    var oldImagePath = Path.Combine(wwwRootPath,vm.Product_obj.ImageUrl.TrimStart('\\'));
-                    //    if (System.IO.File.Exists(oldImagePath) && oldImagePath != "Images\\NoImage.jpg")
-                    //    {
-                    //        System.IO.File.Delete(oldImagePath);
-                    //    }
-                    //}
-                    #endregion  
+                //    #region badWay
+                //    //if (vm.Product_obj.ImageUrl != null)
+                //    //if (!string.IsNullOrEmpty(vm.Product_obj.ImageUrl))
+                //    //{
+                //    //    var oldImagePath = Path.Combine(wwwRootPath,vm.Product_obj.ImageUrl.TrimStart('\\'));
+                //    //    if (System.IO.File.Exists(oldImagePath) && oldImagePath != "Images\\NoImage.jpg")
+                //    //    {
+                //    //        System.IO.File.Delete(oldImagePath);
+                //    //    }
+                //    //}
+                //    #endregion  
 
-                    //__________ Delete Old Image _________
-                    DeleteOldImage(vm.Product_obj.ImageUrl,wwwRootPath);
+                //    //__________ Delete Old Image _________
+                //    DeleteOldImage(vm.Product_obj.ImageUrl,wwwRootPath);
 
-                    //__________ Saveing New Image _________
-                    using (var fileStream = new FileStream(Path.Combine(productPath,fileName) , FileMode.Create))
-                    {
-                        file.CopyTo(fileStream);
-                    }
-                    vm.Product_obj.ImageUrl = @"\Images\Products\" + fileName;
-                }
+                //    //__________ Saveing New Image _________
+                //    using (var fileStream = new FileStream(Path.Combine(productPath,fileName) , FileMode.Create))
+                //    {
+                //        file.CopyTo(fileStream);
+                //    }
+                //    vm.Product_obj.ImageUrl = @"\Images\Products\" + fileName;
+                //}
                 
-                if (vm.Product_obj.Id > 0 )
-                {
-                    if (vm.Product_obj.ImageUrl == null && file == null)
-                    {
-                        vm.Product_obj.ImageUrl = "\\Images\\NoImage.jpg";
-                    }
-                    _iUnit.Product.Update(vm.Product_obj);
-                    TempData["Success"] = "Updated Successfuly";
-                }
-                else
-                {
-                    if (vm.Product_obj.ImageUrl == null)
-                    {
-                        vm.Product_obj.ImageUrl = "\\Images\\NoImage.jpg";
-                    }
-                    _iUnit.Product.Add(vm.Product_obj);
-                    TempData["Success"] = "Inserted Successfuly";
-                }
+                //if (vm.Product_obj.Id > 0 )
+                //{
+                //    if (vm.Product_obj.ImageUrl == null && file == null)
+                //    {
+                //        vm.Product_obj.ImageUrl = "\\Images\\NoImage.jpg";
+                //    }
+                //    _iUnit.Product.Update(vm.Product_obj);
+                //    TempData["Success"] = "Updated Successfuly";
+                //}
+                //else
+                //{
+                //    if (vm.Product_obj.ImageUrl == null)
+                //    {
+                //        vm.Product_obj.ImageUrl = "\\Images\\NoImage.jpg";
+                //    }
+                //    _iUnit.Product.Add(vm.Product_obj);
+                //    TempData["Success"] = "Inserted Successfuly";
+                //}
                 _iUnit.SaveChange();
                 return RedirectToAction("Index");
             }
