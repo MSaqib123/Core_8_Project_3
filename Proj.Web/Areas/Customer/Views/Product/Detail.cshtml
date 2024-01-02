@@ -23,18 +23,18 @@
                                 <div class="carousel-indicators">
                                     @foreach (var item in Model.Product.ProductImages.Select((image,index)=> new {Image=image,Index=index}))
                                     {
-                                        <button type="button" data-bs-target="#(@item.Image.Id)" data-bs-slide-to="@item.Index" class="@(item.Index==0 ? "active": "" )" aria-current="true" aria-label="Slide"></button>
+                                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="@item.Index" class="@(item.Index==0 ? "active": "" )" aria-current="true" aria-label="Slide"></button>
                                     }
                                 </div>
                                 <div class="carousel-inner">
                                     @foreach (var item in Model.Product.ProductImages.Select((image,index)=> new {Image=image,Index=index}))
                                     {
-                                        <div class="carousel-item @(item.Index==0 ? "active": "" )">
+                                       <div class="@(item.Index==0 ? "carousel-item active": "carousel-item" )">
                                             <img src="@(item.Image.ImageURL == null ? "" : item.Image.ImageURL)" class="d-block w-100" alt="..." >
                                         </div>
                                     }
                                 </div>
-                                <button class="carousel-control-prev" type="button" data-bs-target="#2" data-bs-slide="prev">
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
                                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                     <span class="visually-hidden">Previous</span>
                                 </button>
