@@ -24,6 +24,7 @@ namespace Proj.Web.Areas.Customer.Controllers
         {
             ShoppingCart s = new ShoppingCart();
             s.Product = _iUnit.Product.Get(x => x.Id == id, includeProperties: "Category");
+            s.Product.ProductImages = _iUnit.ProductImage.GetAll(x=>x.ProductId == id).ToList();
             s.productId = id;
             return View(s);
         }
