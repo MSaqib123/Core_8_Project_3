@@ -20,6 +20,7 @@ namespace Proj.Web.Areas.Customer.Controllers
             return View();
         }
 
+
         public IActionResult Detail(int id)
         {
             ShoppingCart s = new ShoppingCart();
