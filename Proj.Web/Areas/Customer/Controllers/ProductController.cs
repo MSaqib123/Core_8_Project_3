@@ -14,11 +14,14 @@ namespace Proj.Web.Areas.Customer.Controllers
         public ProductController(IUnitOfWork iUnit)
         {
             _iUnit = iUnit;
+
         }
         public IActionResult Index()
         {
             return View();
         }
+
+
 
 
         public IActionResult Detail(int id)
