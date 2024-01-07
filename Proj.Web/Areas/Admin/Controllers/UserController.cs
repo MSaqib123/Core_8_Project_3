@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Proj.DataAccess.Data;
+using Proj.DataAccess.Repository.IRepository;
 using Proj.Models;
 using Proj.Models.ViewModel;
 using Proj.Utility;
@@ -14,16 +15,22 @@ namespace Proj.Web.Areas.Admin.Controllers
     [Authorize(Roles = SD.Role_Admin)]
     public class UserController: Controller
     {
-        private readonly ApplicationDbContext db;
+        //private readonly ApplicationDbContext db;
         private readonly UserManager<IdentityUser> userManager;
+        private readonly RoleManager<IdentityRole> roleManager;
+        private readonly IUnitOfWork iUnit;
 
         public UserController(
-            ApplicationDbContext _db,
-            UserManager<IdentityUser> _userManager
+            //ApplicationDbContext _db,
+            UserManager<IdentityUser> _userManager,
+            RoleManager<IdentityRole> _roleManager,
+            IUnitOfWork _iUnit
             )
         {
-            db= _db;
+            //db= _db;
             userManager = _userManager;
+            roleManager = _roleManager;
+            iUnit = _iUnit;
         }
 
         [HttpGet]
@@ -36,26 +43,32 @@ namespace Proj.Web.Areas.Admin.Controllers
         {
             RoleManagementVM vm = new RoleManagementVM();
 
-            vm.applicationUser = db.ApplicationUsers.Include(x=>x.Company).Where(x => x.Id == userId).FirstOrDefault();
+            //db base
+            //vm.applicationUser = db.ApplicationUsers.Include(x=>x.Company).Where(x => x.Id == userId).FirstOrDefault();
+
+            //unit base
+            vm.applicationUser = iUnit.ApplicationUser.Get(x => x.Id == userId , includeProperties : "Company");
 
             //Roles Projection
-            vm.RoleList = db.Roles.Select(u => new SelectListItem
+            vm.RoleList = roleManager.Roles.Select(u => new SelectListItem//db
             {
                 Text = u.Name,
                 Value = u.Name
             });
 
             //Companies Projection
-            vm.CompanyList = db.Companies.Select(u => new SelectListItem
+            vm.CompanyList = iUnit.Company.GetAll().Select(u => new SelectListItem//db.Companies.Select(u => new SelectListItem
             {
                 Text = u.Name,
                 Value = u.Id.ToString()
             }) ;
 
             //Current Role 
-            var roleId = db.UserRoles.FirstOrDefault(x => x.UserId == userId).RoleId;
-            vm.applicationUser.Role = db.Roles.FirstOrDefault(x => x.Id == roleId).Name;
+            //db
+            //var roleId = db.UserRoles.FirstOrDefault(x => x.UserId == userId).RoleId;
 
+            //iunit
+            vm.applicationUser.Role = userManager.GetRolesAsync(iUnit.ApplicationUser.Get(u=>u.Id == userId)).GetAwaiter().GetResult().FirstOrDefault();
             return View(vm);
         }
 
@@ -63,16 +76,17 @@ namespace Proj.Web.Areas.Admin.Controllers
         public IActionResult RoleManagement(RoleManagementVM vm)
         {
             //Current Role 
-            var roleId = db.UserRoles.FirstOrDefault(x => x.UserId == vm.applicationUser.Id).RoleId;
+            //var roleId = db.UserRoles.FirstOrDefault(x => x.UserId == vm.applicationUser.Id).RoleId;
 
             //old role
-            string oldRole = db.Roles.FirstOrDefault(u=>u.Id == roleId).Name;
+            string oldRole = vm.applicationUser.Role = userManager.GetRolesAsync(iUnit.ApplicationUser.Get(u => u.Id == vm.applicationUser.Id)).GetAwaiter().GetResult().FirstOrDefault();
 
             //Admin can not Change Company Directly ---> he has to change   Role 1st
+            ApplicationUser applicationUser = iUnit.ApplicationUser.Get(x => x.Id == vm.applicationUser.Id);
+
             if (!(vm.applicationUser.Role == oldRole))
             {
                 //a role was updated
-                ApplicationUser applicationUser = db.ApplicationUsers.FirstOrDefault(x => x.Id == vm.applicationUser.Id);
                 if (vm.applicationUser.Role == SD.Role_Company)
                 {
                     applicationUser.CompanyId = vm.applicationUser.CompanyId;
@@ -81,14 +95,25 @@ namespace Proj.Web.Areas.Admin.Controllers
                 {
                     applicationUser.CompanyId = null;
                 }
-                
+                iUnit.ApplicationUser.Update(applicationUser);
+                iUnit.SaveChange();
+
                 //__ Removing old role __
                 userManager.RemoveFromRoleAsync(applicationUser, oldRole).GetAwaiter().GetResult();
                 //___ add new role ___
                 userManager.AddToRoleAsync(applicationUser, vm.applicationUser.Role).GetAwaiter().GetResult();
-
-                db.SaveChanges(); 
             }
+            else
+            {
+                if(oldRole == SD.Role_Company && applicationUser.CompanyId != vm.applicationUser.CompanyId)
+                {
+                    applicationUser.CompanyId = vm.applicationUser.CompanyId;
+                    iUnit.ApplicationUser.Update(applicationUser);
+                    iUnit.SaveChange();
+
+                }
+            }
+
 
             return RedirectToAction(nameof(Index));
         }
@@ -99,16 +124,18 @@ namespace Proj.Web.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var list = db.ApplicationUsers.Include(x=>x.Company).ToList();
+            //var list = db.ApplicationUsers.Include(x=>x.Company).ToList();
+            var list = iUnit.ApplicationUser.GetAll(includeProperties: "Company").ToList();
 
-            var userRoles = db.UserRoles.ToList();
-            var roles = db.Roles.ToList(); 
+            //var userRoles = db.UserRoles.ToList();
+            //var roles = db.Roles.ToList(); 
 
             //________ Fixing Nullable values for datatable _____
             foreach (var item in list)
             {
-                var roleId = userRoles.FirstOrDefault(x => x.UserId == item.Id).RoleId;
-                item.Role = roles.FirstOrDefault(x => x.Id == roleId).Name;
+                //var roleId = userrole.FirstOrDefault(x => x.UserId == item.Id).RoleId;
+                //item.Role = roles.FirstOrDefault(x => x.Id == roleId).Name;
+                item.Role = userManager.GetRolesAsync(item).GetAwaiter().GetResult().FirstOrDefault();
 
                 if (item.Company == null)
                 {
@@ -124,12 +151,12 @@ namespace Proj.Web.Areas.Admin.Controllers
             return Json(new {data= list });
         }
 
-
         [HttpPost]
         public IActionResult LockUnlock([FromBody]string? id)
         {
-            var rec = db.ApplicationUsers.FirstOrDefault(x=>x.Id == id);
-            if(rec == null)
+            //var rec = db.ApplicationUsers.FirstOrDefault(x=>x.Id == id);
+            var rec = iUnit.ApplicationUser.Get(x => x.Id == id);
+            if (rec == null)
             {
                 return Json(new { success = true, message = "Deleted Successfully" });
             }
@@ -142,7 +169,9 @@ namespace Proj.Web.Areas.Admin.Controllers
             {
                 rec.LockoutEnd = DateTime.Now.AddYears(1000);
             }
-            db.SaveChanges();
+            //db.SaveChanges();
+            iUnit.ApplicationUser.Update(rec);
+            iUnit.SaveChange();
             return Json(new { success = true, message = "Deleted Successfully" });
         }
 
